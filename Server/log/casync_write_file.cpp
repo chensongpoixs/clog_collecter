@@ -18,57 +18,74 @@
 			沿着自己的回忆，一个个的场景忽闪而过，最后发现，我的本心，在我写代码的时候，会回来。
 			安静，淡然，代码就是我的一切，写代码就是我本心回归的最好方式，我还没找到本心猎手，但我相信，顺着这个线索，我一定能顺藤摸瓜，把他揪出来。
 ************************************************************************************************/
+#include "casync_write_file.h"
 
-#ifndef _C_MSG_DIPATCH_H_
-#define _C_MSG_DIPATCH_H_
- 
-#include "cnet_type.h"
-#include <atomic>
+namespace chen {
 
-//#include <json/json.h>
-#include <unordered_map>
-#include "cmsg_base_id.h"
-#include "cwan_session.h"
-namespace chen { 
 
-	typedef void (cwan_session::*handler_type)(const void* ptr, uint32 msg_size);
-#pragma pack(push, 4)
 
-	struct cmsg_handler
+
+	casync_write_file::~casync_write_file()
 	{
-		std::string							msg_name;
-		std::atomic<long>					handle_count;
-		handler_type						handler;
+	}
 
-		cmsg_handler() : msg_name(""), handle_count(0), handler(NULL) {}
-	};
-	
-	//handler_type
-	 
-	class cmsg_dispatch :private cnoncopytable
+	bool casync_write_file::init(const char* remote_ip, int32 client_type)
 	{
-	public:
-		
-	public:
-		explicit cmsg_dispatch();
-		virtual ~cmsg_dispatch();
-	public:
+		m_remote_ip = remote_ip;
+		m_client_type = client_type;
+		return true;
+	}
 
-		bool init();
-		void destroy();
+	void casync_write_file::update(uint32 uDeltaTime)
+	{
+	}
 
-		cmsg_handler* get_msg_handler(uint16 msg_id);
+	void casync_write_file::destroy()
+	{
+		m_stoped = true;
+		if (m_thread.joinable())
+		{
+			m_thread.join();
+		}
+		m_client_type = 0;
+		m_log_lists.clear();
+		m_remote_ip.clear();
+	}
 
-	private:
-		void _register_msg_handler(uint16 msg_id, const std::string& msg_name, handler_type handler);
-		
-	private:
-		cmsg_handler		m_msg_handler[Msg_Max];
-		
-	};
- 
-#pragma pack(pop)
-	extern cmsg_dispatch g_msg_dispatch;
-} //namespace chen
+	void casync_write_file::_work_pthread()
+	{
+		 MC2S_LogDataUpdate log_data;
+		while (!m_stoped || !m_log_lists.empty())
+		{
+			{
+				std::unique_lock<std::mutex> lock(m_log_lists_lock);
+				m_condition.wait(lock, [this]() {return m_log_lists.size() > 0 || m_stoped; });
+			}
+			//_handler_check_log_file();
+			while (!m_log_lists.empty())
+			{
+				{
+					clock_guard lock{ m_log_lists_lock };
+					log_data = m_log_lists.front();
+					m_log_lists.pop_front();
+				}
 
-#endif //!#define _C_MSG_DIPATCH_H_
+				//if (!log_item_ptr)
+				//{
+				//	continue;
+				//}
+				//
+				//_handler_log_item(log_item_ptr);
+				//
+				//if (log_item_ptr->buf)
+				//{
+				//	delete[] log_item_ptr->buf;
+				//}
+				//
+				//delete log_item_ptr;
+
+			}
+		}
+	}
+
+}

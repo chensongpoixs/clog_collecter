@@ -20,7 +20,7 @@ purpose:		async_log
 #include <ctime>
 #include <cstdio>
 #include <cstdlib>
-#include "cnoncopyable.h"
+#include "cnoncopytable.h"
 #include "clog_color.h"
 #include <thread>
 #include <list>
@@ -33,7 +33,7 @@ namespace chen
 	struct clog_item;
 
 
-	class casync_log : private cnoncopyable
+	class casync_log : private cnoncopytable
 	{
 	private:
 		typedef std::condition_variable					ccond;

@@ -27,12 +27,12 @@ purpose:	ÍøÂçÊý¾ÝµÄÊÕ·¢
 
 #ifndef _C_WAN_SESSION_H_
 #define _C_WAN_SESSION_H_
-#include "cnoncopyable.h"
+#include "cnoncopytable.h"
 #include "cnet_type.h"
  
 #include "MsgID.pb.h"
 #include "ccrypto.h"
- 
+#include "casync_write_file.h"
 //#include "ccollection.h"
 namespace chen {
 
@@ -44,7 +44,7 @@ namespace chen {
 	};
 
 
-	class cwan_session  :private cnoncopyable
+	class cwan_session  :private cnoncopytable
 	{
 	private:
 		typedef void (cwan_session::* msg_handler_type)(const void* ptr, uint32 msg_size);
@@ -67,13 +67,18 @@ namespace chen {
 	 
 	public:
 
-		void    handler_client_dongle_auth(const void* ptr, uint32 msg_size);
+
+		void	handler_client_login(const void* ptr, uint32 msg_size);
+		void    handler_client_log_data_update(const void* ptr, uint32 msg_size);
 
 		 
 		void    handler_client_heatbeat(const void* ptr, uint32 msg_size);
 		 
 	    
 	public:
+
+		void set_remote_ip(const char* ip) { m_remote_ip = ip; }
+
 		bool is_used();
 		void set_used();
 		void disconnect();
@@ -91,6 +96,8 @@ namespace chen {
 		uint64					m_client_session; 
 		time_t					m_heart_beart;
 		std::string				m_collectionid;
+		casync_write_file		m_async_write_file;
+		std::string				m_remote_ip;
 	 
 	};
 }//namespace chen

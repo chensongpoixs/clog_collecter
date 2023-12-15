@@ -161,17 +161,6 @@
     <ClCompile Include="cregistry.cpp" />
     <ClCompile Include="ctime_api.cpp" />
     <ClCompile Include="cutil.cpp" />
-    <ClCompile Include="peb.c" />
-    <ClCompile Include="sigar.c" />
-    <ClCompile Include="sigar_cache.c" />
-    <ClCompile Include="sigar_fileinfo.c" />
-    <ClCompile Include="sigar_format.c" />
-    <ClCompile Include="sigar_getline.c" />
-    <ClCompile Include="sigar_ptql.c" />
-    <ClCompile Include="sigar_signal.c" />
-    <ClCompile Include="sigar_util.c" />
-    <ClCompile Include="win32_sigar.c" />
-    <ClCompile Include="wmi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="casync_log.h" />
@@ -194,7 +183,7 @@
     <ClInclude Include="cnet_msg_reserve.h" />
     <ClInclude Include="cnet_session.h" />
     <ClInclude Include="cnet_type.h" />
-    <ClInclude Include="cnoncopyable.h" />
+    <ClInclude Include="cnoncopytable.h" />
     <ClInclude Include="crandom.h" />
     <ClInclude Include="crc4.h" />
     <ClInclude Include="cregistry.h" />
@@ -203,16 +192,6 @@
     <ClInclude Include="ctime_const.h" />
     <ClInclude Include="ctime_elapse.h" />
     <ClInclude Include="cutil.h" />
-    <ClInclude Include="sigar.h" />
-    <ClInclude Include="sigar_fileinfo.h" />
-    <ClInclude Include="sigar_format.h" />
-    <ClInclude Include="sigar_getline.h" />
-    <ClInclude Include="sigar_log.h" />
-    <ClInclude Include="sigar_os.h" />
-    <ClInclude Include="sigar_pdh.h" />
-    <ClInclude Include="sigar_private.h" />
-    <ClInclude Include="sigar_ptql.h" />
-    <ClInclude Include="sigar_util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

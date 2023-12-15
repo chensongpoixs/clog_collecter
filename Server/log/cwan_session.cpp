@@ -46,7 +46,7 @@ purpose:	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ýµï¿½ï¿½Õ·ï¿½
 #include "cutil.h"
 #include "clog.h"
 #include "crandom.h"
-#include "clog.h"
+#include <clog.h>
 
 
 namespace chen {
@@ -56,7 +56,8 @@ namespace chen {
 		, m_client_connect_type(EClientConnectNone)
 		, m_heart_beart(::time(NULL))
 		, m_collectionid("")
-		 
+		, m_async_write_file()
+		, m_remote_ip("")
 	{
 	}
 
@@ -76,6 +77,7 @@ namespace chen {
 		//WARNING_EX_LOG("");
 		m_heart_beart = ::time(NULL);
 		m_client_connect_type = EClientConnectNone;
+		m_async_write_file.destroy();
 	}
 	void cwan_session::update(uint32 uDeltaTime)
 	{
@@ -110,6 +112,7 @@ namespace chen {
 	{
 		m_client_connect_type = EClientConnectNone;
  
+		m_async_write_file.destroy();
 	}
 	 
  

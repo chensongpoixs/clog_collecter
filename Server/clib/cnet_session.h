@@ -8,7 +8,7 @@ purpose:		net_session
 
 #ifndef _C_NET_SESSION_H_
 #define _C_NET_SESSION_H_
-#include "cnoncopyable.h"
+#include "cnoncopytable.h"
 #include "cnet_type.h"
 #include "cmsg_buffer.h"
 #include <mutex>
@@ -18,7 +18,7 @@ namespace chen {
 
 	class cnet_mgr;
 	class cnet_msg;
-	class cnet_session :private cnoncopyable
+	class cnet_session :private cnoncopytable
 	{
 	private:
 		typedef std::atomic_bool 													catomic_bool;

@@ -48,14 +48,9 @@ namespace chen {
 		}
 
 		{
-			cversions& auth = m_versions[EDT_Auth];
-			auth.push_back(1);
-			auth.push_back(2);
-		}
-		{
-			cversions& dongleAuth = m_versions[EDT_DongleAuth];
-			dongleAuth.push_back(1);
-		}
+			cversions& auth = m_versions[EDT_Log];
+			auth.push_back(1); 
+		} 
 		m_inited = true;
 		return true;
 	}
@@ -111,9 +106,9 @@ namespace chen {
 
 		std::string base_path(update_path);
 		base_path.append("sql/update/");
-		if (type == EDT_Auth)
+		if (type == EDT_Log)
 		{
-			base_path.append("auth");
+			base_path.append("log");
 		}
 		else
 		{

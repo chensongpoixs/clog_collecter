@@ -7,10 +7,10 @@ purpose:		cmsg_buffer
 ************************************************************************************************/
 #ifndef _C_MSG_BUFFER_H_
 #define _C_MSG_BUFFER_H_
-#include "cnoncopyable.h"
+#include "cnoncopytable.h"
 #include "cnet_type.h"
 namespace chen {
-	class cmsg_send_buffer : private cnoncopyable
+	class cmsg_send_buffer : private cnoncopytable
 	{
 	public:
 		cmsg_send_buffer(uint32 max_size);
@@ -37,7 +37,7 @@ namespace chen {
 	};
 
 
-	class cmsg_receive_buffer : private cnoncopyable
+	class cmsg_receive_buffer : private cnoncopytable
 	{
 	public:
 		cmsg_receive_buffer(uint32 size);

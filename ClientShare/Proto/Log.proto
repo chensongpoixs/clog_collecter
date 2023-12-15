@@ -12,6 +12,7 @@ option optimize_for = LITE_RUNTIME;
 // 情况非常特殊
 message MC2S_Login
 { 
+	optional 		int32 				   client_type 		= 1; // Rtc , 3D , builder 
 }
 
 

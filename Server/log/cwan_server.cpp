@@ -33,6 +33,7 @@ purpose:		wan_server
 #include "clog.h"
 
 #include "cserver_cfg.h"
+#include <clog.h>
 namespace chen {
 	 
 	cwan_server   g_wan_server;
@@ -58,17 +59,13 @@ namespace chen {
 			return false;
 		}
 		m_max_session_num = g_cfg.get_uint32(ECI_WanClientMaxNum);
-		uint32 client_session_num = 1;
-		//if (g_cfg.get_uint32(ECI_EnableCentral))
-		//{
-		//	client_session_num = 1;
-		//	
-		//}
+		uint32 client_session_num = 0;
+		 
 		m_max_session_num += client_session_num;
-		const uint32 recv_buf_size = g_cfg.get_uint32(ECI_LogInputBufSize);
-		const uint32 send_buf_size = g_cfg.get_uint32(ECI_LogOutputBufSize);
-		const uint32 pool_size = g_cfg.get_uint32(ECI_LogMemPoolSize);
-		if (!m_net_ptr->init("log_server", client_session_num, m_max_session_num, send_buf_size, recv_buf_size, pool_size))
+		const uint32 recv_buf_size = g_cfg.get_uint32(ECI_WanInputBufSize);
+		const uint32 send_buf_size = g_cfg.get_uint32(ECI_WanOutputBufSize);
+		const uint32 pool_size = g_cfg.get_uint32(ECI_WanMemPoolSize);
+		if (!m_net_ptr->init("log", client_session_num, m_max_session_num, send_buf_size, recv_buf_size, pool_size))
 		{
 			return false;
 		}
@@ -142,11 +139,7 @@ namespace chen {
 		{
 			return false;
 		}
-		//if (g_cfg.get_uint32(ECI_EnableCentral))
-		{
-		 	m_net_ptr->set_reconnet_second(5);
-		 	_auth_connect();
-		}
+		 
 		
 
 		return true;
@@ -188,23 +181,7 @@ namespace chen {
 	{
 		//if (para)
 		uint32 index = get_session_index(session_id);
-		if (/*g_cfg.get_uint32(ECI_EnableCentral) && */index < EServerMax)
-		{
-			if (m_session_ptr[index].is_used())
-			{
-				WARNING_EX_LOG("central server session_id = %u, used !!!", index);
-				return;
-			}
-			m_session_ptr[index].set_used();
-			m_session_ptr[index].set_session_id(session_id);
-			//m_session_ptr[index].send_auth_login();
-			//MR2C_Login msg;
-			//g_central_session = session_id;
-			//msg.set_render_server_id(g_cfg.get_uint32(ECI_RenderServerIndex));
-			//send_msg(session_id, R2C_Login, (const void *)msg.SerializeAsString().c_str(),(uint32) msg.SerializeAsString().length());
-			NORMAL_EX_LOG(" Auth connect ok !!!");
-			return;
-		}
+		
 		if (m_session_ptr[index].is_used())
 		{
 			WARNING_EX_LOG("session_id = %u, used !!!", index);
@@ -212,46 +189,22 @@ namespace chen {
 		}
 		m_session_ptr[index].set_used();
 		m_session_ptr[index].set_session_id(session_id);
-		m_session_ptr[index].build_encrypt_key();
+		m_session_ptr[index].set_remote_ip(buf);
+		//m_session_ptr[index].build_encrypt_key();
 		//m_session_ptr[index
 		NORMAL_EX_LOG("session_id = %lu", session_id);
 	}
 	void cwan_server::on_msg_receive(uint32 session_id, uint16 msg_id, const void * p, uint32 size)
 	{
 		uint32 index = get_session_index(session_id);
-		//if (/*g_cfg.get_uint32(ECI_EnableCentral) &&*/ index < 1)
-		//{
-		//	if (!m_session_ptr[index].is_used())
-		//	{
-		//		WARNING_EX_LOG("dongle auth session_id = %u, not  used !!!", session_id);
-		//		return;
-		//	}
-		//
-		//	NORMAL_EX_LOG("dongle auth  msg_id = %u", msg_id);
-		//
-		//
-		//	cmsg_handler* handler_ptr = g_msg_server_dispatch.get_msg_handler(msg_id);
-		//	if (!handler_ptr)
-		//	{
-		//		WARNING_EX_LOG("not find msg_id = %u", msg_id);
-		//		return;
-		//	}
-		//	if (!handler_ptr->handler)
-		//	{
-		//		WARNING_EX_LOG("msg_id = %u not register !!!", msg_id);
-		//		return;
-		//	}//(this->*(iter->second))(p, size);
-		//	++handler_ptr->handle_count;
-		//	(m_session_ptr[index].*(handler_ptr->handler)) (p, size);
-		//	return;
-		//}
+		
 		if (!m_session_ptr[index].is_used())
 		{
 			WARNING_EX_LOG("session_id = %u, not  used !!!", session_id);
 			return;
 		}
 		NORMAL_EX_LOG("session_id = %lu, msg_id =%lu,  size = %lu", session_id, msg_id,   size);
-		cmsg_handler* handler_ptr = g_msg_server_dispatch.get_msg_handler(msg_id);
+		cmsg_handler* handler_ptr = g_msg_dispatch.get_msg_handler(msg_id);
 		if (!handler_ptr)
 		{
 			WARNING_EX_LOG("[session_id = %u]not find [msg_id = %u]", session_id, msg_id);
@@ -263,40 +216,15 @@ namespace chen {
 			return;
 		}
 		++handler_ptr->handle_count;
-		if (m_session_ptr[index].need_encrypt())
-		{
-			m_session_ptr[index].decrypt(p, m_encrypt_byte_ptr, size);
-			(m_session_ptr[index].*(handler_ptr->handler)) (m_encrypt_byte_ptr, size);
-		}
-		else
-		{
-			(m_session_ptr[index].*(handler_ptr->handler)) (p, size);
-		}
-		//m_session_ptr[index].OnMessage(session_id , msg_id, p, size);
-		/*if (msg_id == C2S_Login  )
-		{ 
-			m_session_ptr[session_id].handler_login(p, size);
-		}
-		else
-		{
-
-		}*/
+		 
+		 (m_session_ptr[index].*(handler_ptr->handler)) (p, size);
+		 
+		 
 	}
 	void cwan_server::on_disconnect(uint32 session_id)
 	{
 		uint32 index = get_session_index(session_id);
-		//if (/*g_cfg.get_uint32(ECI_EnableCentral) &&*/ index < 1)
-		//{
-		//	if (!m_session_ptr[index].is_used())
-		//	{
-		//		WARNING_EX_LOG("central  session_id = %u, used !!!", session_id);
-		//		return;
-		//	}
-		//	m_session_ptr[index].disconnect();
-		//	NORMAL_EX_LOG("Dongle Auth disconnect  " );
-		//	//g_app_render_info_mgr.destroy();
-		//	return;
-		//}
+		 
 		if (!m_session_ptr[index].is_used())
 		{
 			WARNING_EX_LOG("session_id = %u, used !!!", session_id  );
@@ -310,7 +238,7 @@ namespace chen {
 	{
 		if (!m_net_ptr->send_msg(session_id, msg_id, p, size))
 		{
-			WARNING_LOG("send session_id = %lu, msg_id = %u", session_id, msg_id);
+			WARNING_EX_LOG("send session_id = %lu, msg_id = %u", session_id, msg_id);
 		}
 	}
 
@@ -320,7 +248,7 @@ namespace chen {
 	{
 		if (!index_valid(index))
 		{
-			ERROR_LOG("[%s] invalid session index, index = %u", __FUNCTION__, index);
+			ERROR_EX_LOG("[%s] invalid session index, index = %u", __FUNCTION__, index);
 			return NULL;
 		}
 
@@ -331,7 +259,7 @@ namespace chen {
 	{
 		if (!index_valid(index))
 		{
-			ERROR_LOG("[%s] invalid session index, index = %u, session id = %u", __FUNCTION__, index, session_id);
+			ERROR_EX_LOG("[%s] invalid session index, index = %u, session id = %u", __FUNCTION__, index, session_id);
 			return NULL;
 		}
 
@@ -357,9 +285,9 @@ namespace chen {
 	{
 		//if (g_cfg.get_uint32(ECI_EnableCentral))
 		{
-			if (!m_net_ptr->connect_to(0, g_cfg.get_string(ECI_AuthIp), g_cfg.get_uint32(ECI_AuthPort)))
+			if (!m_net_ptr->connect_to(0, g_cfg.get_string(ECI_WanIp), g_cfg.get_uint32(ECI_WanPort)))
 			{
-				WARNING_EX_LOG("connect central failed !!! [ip = %s][port = %u]", g_cfg.get_string(ECI_AuthIp).c_str(), g_cfg.get_uint32(ECI_AuthPort));
+				WARNING_EX_LOG("connect central failed !!! [ip = %s][port = %u]", g_cfg.get_string(ECI_WanIp).c_str(), g_cfg.get_uint32(ECI_WanPort));
 			}
 		}
 	}

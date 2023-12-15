@@ -10,14 +10,14 @@ purpose:	×Ö·û´®¶ÁÈ¡¹¤¾ß
 #define _C_CMD_PARAM_H_
 
 #include <boost/lexical_cast.hpp>
-#include "cnoncopyable.h"
+#include "cnoncopytable.h"
 #include <string>
 #include <vector>
 #include "cnet_type.h"
 
 namespace chen {
 
-	class ccmd_param :private cnoncopyable
+	class ccmd_param :private cnoncopytable
 	{
 	public:
 		ccmd_param() : m_index(-1) {}

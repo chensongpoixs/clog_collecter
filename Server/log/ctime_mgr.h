@@ -26,9 +26,9 @@ purpose:		ctime_mgr
 #ifndef _C_TIME_MGR_H_
 #define _C_TIME_MGR_H_
 
-#include "cnoncopyable.h"
+#include "cnoncopytable.h"
 namespace chen {
-	class ctime_mgr :private cnoncopyable
+	class ctime_mgr :private cnoncopytable
 	{
 	public:
 		explicit ctime_mgr();

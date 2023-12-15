@@ -7,7 +7,7 @@ purpose:		net_mgr
 ************************************************************************************************/
 #ifndef _C_NET_MGR_H_
 #define _C_NET_MGR_H_
-#include "cnoncopyable.h"
+#include "cnoncopytable.h"
 //#include "creactor.h"
 #include "cnet_type.h"
 //#include "cacceptor.h"
@@ -30,7 +30,7 @@ purpose:		net_mgr
 namespace chen {
 	class cnet_session;
 
-	class cnet_mgr :public cnoncopyable
+	class cnet_mgr :public cnoncopytable
 	{
 	public:
 		//连接回调

@@ -35,8 +35,7 @@ namespace chen {
 	public:
 		enum EDb_type
 		{
-			EDT_Auth = 0, 
-			EDT_DongleAuth,
+			EDT_Log = 0,  
 			EDT_MAX ,
 		};
 		typedef std::vector<int>	cversions;

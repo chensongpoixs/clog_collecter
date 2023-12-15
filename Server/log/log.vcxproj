@@ -83,8 +83,9 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)..\vsout\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
-    <IncludePath>..\common\cmysql;..\common\cclient_msg;$(C_INCLUDE)\mysql\include;$(C_INCLUDE)\json\include;$(C_INCLUDE)\openssl\include;$(C_INCLUDE)\protobuf\include;$(C_INCLUDE)\boost\include;..\common;..\common\cmsg;..\common\cclient_msg;..\common\server_msg;..\common\cmessage;..\clib;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>..\clib;..\common\cmysql;$(C_INCLUDE)\mysql\include;$(C_INCLUDE)\json\include;$(C_INCLUDE)\openssl\include;$(C_INCLUDE)\protobuf\include;$(C_INCLUDE)\boost\include;..\common;..\common\cmsg;..\common\cclient_msg;..\common\server_msg;..\common\cmessage;..\clib;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <LibraryPath>$(C_INCLUDE)\mysql\lib\x64;$(C_INCLUDE)\json\lib\x64\release;$(C_INCLUDE)\mysql\lib\x64;$(C_INCLUDE)\protobuf\lib\x64\release;$(C_INCLUDE)\boost\lib\x64;$(ProjectDir)..\lib\$(Platform)\$(Configuration);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -144,19 +145,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="casync_write_file.cpp" />
     <ClCompile Include="ccfg.cpp" />
     <ClCompile Include="cglobal_db.cpp" />
     <ClCompile Include="cguard_reply.cpp" />
+    <ClCompile Include="crobot_msg_header.cpp" />
+    <ClCompile Include="log.cpp" />
     <ClCompile Include="cmsg_dispatch.cpp" />
+    <ClCompile Include="csession_handler.cpp" />
     <ClCompile Include="ctime_mgr.cpp" />
     <ClCompile Include="cwan_server.cpp" />
     <ClCompile Include="cwan_session.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="casync_write_file.h" />
     <ClInclude Include="ccfg.h" />
     <ClInclude Include="cglobal_db.h" />
     <ClInclude Include="cguard_reply.h" />
+    <ClInclude Include="crobot_msg_header.h" />
+    <ClInclude Include="log.h" />
     <ClInclude Include="cmsg_dispatch.h" />
     <ClInclude Include="ctime_mgr.h" />
     <ClInclude Include="cwan_server.h" />

@@ -19,56 +19,56 @@
 			安静，淡然，代码就是我的一切，写代码就是我本心回归的最好方式，我还没找到本心猎手，但我相信，顺着这个线索，我一定能顺藤摸瓜，把他揪出来。
 ************************************************************************************************/
 
-#ifndef _C_MSG_DIPATCH_H_
-#define _C_MSG_DIPATCH_H_
- 
+#ifndef _C_ASYNC_WRITE_FILE_H_
+#define _C_ASYNC_WRITE_FILE_H_
+
 #include "cnet_type.h"
-#include <atomic>
+#include "cnoncopytable.h"
+#include <thread>
+#include <list>
+#include <mutex>
+#include "Log.pb.h"
 
-//#include <json/json.h>
-#include <unordered_map>
-#include "cmsg_base_id.h"
-#include "cwan_session.h"
-namespace chen { 
+namespace chen {
 
-	typedef void (cwan_session::*handler_type)(const void* ptr, uint32 msg_size);
-#pragma pack(push, 4)
-
-	struct cmsg_handler
+	class casync_write_file : private cnoncopytable
 	{
-		std::string							msg_name;
-		std::atomic<long>					handle_count;
-		handler_type						handler;
+	private:
+		typedef std::lock_guard<std::mutex>				clock_guard;
+		typedef std::mutex								clock_type;
+		typedef std::condition_variable					ccond;
+	public:
+		explicit casync_write_file()
+			: m_stoped(false)
+			, m_log_lists()
+			, m_log_lists_lock()
+			, m_remote_ip("")
+			, m_client_type(0){}
+		virtual ~casync_write_file();
 
-		cmsg_handler() : msg_name(""), handle_count(0), handler(NULL) {}
-	};
-	
-	//handler_type
-	 
-	class cmsg_dispatch :private cnoncopytable
-	{
-	public:
-		
-	public:
-		explicit cmsg_dispatch();
-		virtual ~cmsg_dispatch();
-	public:
 
-		bool init();
+	public:
+		bool init(const char * remote_ip, int32 client_type);
+		void update(uint32 uDeltaTime);
 		void destroy();
 
-		cmsg_handler* get_msg_handler(uint16 msg_id);
 
+	public:
+		//void set_remote_ip(const char* ip) { m_remote_ip = ip; }
 	private:
-		void _register_msg_handler(uint16 msg_id, const std::string& msg_name, handler_type handler);
-		
+		void _work_pthread();
 	private:
-		cmsg_handler		m_msg_handler[Msg_Max];
-		
+
+		bool					m_stoped;
+		std::thread				m_thread;
+		std::list<MC2S_LogDataUpdate>  m_log_lists;
+		clock_type				m_log_lists_lock;
+		ccond					m_condition;
+
+		std::string				m_remote_ip;
+		int32					m_client_type;
+
 	};
- 
-#pragma pack(pop)
-	extern cmsg_dispatch g_msg_dispatch;
-} //namespace chen
+}
 
-#endif //!#define _C_MSG_DIPATCH_H_
+#endif // _C_ASYNC_WRITE_FILE_H_

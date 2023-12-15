@@ -23,12 +23,12 @@
 #define _C_RANDOM_H_
 
 #include "cnet_type.h"
-#include "cnoncopyable.h"
+#include "cnoncopytable.h"
 #include "csingleton.h"
 #include <string>
 namespace chen
 {
-	class crandom : public cnoncopyable
+	class crandom : public cnoncopytable
 	{
 	public:
 		crandom();

@@ -12,11 +12,11 @@ purpose:		log
 #include "cnet_type.h"
 #include <cstdio>
 #include <cstdlib>
-#include "cnoncopyable.h"
+#include "cnoncopytable.h"
 #include "casync_log.h"
 namespace chen {
 
-	class clog : private cnoncopyable
+	class clog : private cnoncopytable
 	{
 	private:
 		enum { EBuf_Size = 1024 };

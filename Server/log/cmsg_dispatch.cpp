@@ -21,7 +21,10 @@
 
 #include "cmsg_dispatch.h"
 #include "clog.h"
+#include "clog.h"
 #include "cwan_session.h"
+#include <clog.h>
+//#include <clog.h>
 namespace chen {
 	cmsg_dispatch::cmsg_dispatch()
 	{
@@ -31,10 +34,9 @@ namespace chen {
 	}
 	bool cmsg_dispatch::init()
 	{
-		//_register_msg_handler(R2A_BeartHeart, "Render2Auth_BeartHeart", &cwan_session::handler_heatbeat);
-
-	//	_register_msg_handler(R2A_Login,			"Render2Auth_Login",		&cwan_session::handler_login);
-		  
+		_register_msg_handler(C2S_Login, "C2S_Login", &cwan_session::handler_client_login);
+		_register_msg_handler(C2S_HeatBeat, "C2S_HeatBeat", &cwan_session::handler_client_heatbeat);
+		_register_msg_handler(C2S_LogDataUpdate, "C2S_LogDataUpdate", &cwan_session::handler_client_log_data_update);
 
 		return true;
 	}
@@ -44,7 +46,7 @@ namespace chen {
 	}
 	cmsg_handler * cmsg_dispatch::get_msg_handler(uint16 msg_id)
 	{
-		if (static_cast<int> (msg_id) <= Msg_Client_Max || static_cast<int> (msg_id) >= Msg_Max)
+		if (static_cast<uint16> (msg_id) > Msg_Client_Max  )
 		{
 			return NULL;
 		}
@@ -53,12 +55,12 @@ namespace chen {
 	}
 	void cmsg_dispatch::_register_msg_handler(uint16 msg_id, const std::string & msg_name, handler_type handler)
 	{
-		if (static_cast<int> (msg_id) <= Msg_Client_Max || m_msg_handler[msg_id].handler && msg_id>= Msg_Max)
+		if (static_cast<uint16> (msg_id) > Msg_Client_Max || m_msg_handler[msg_id].handler  )
 		{
 			ERROR_LOG("[%s] register msg error, msg_id = %u, msg_name = %s", __FUNCTION__, msg_id, msg_name.c_str());
 			return;
 		}
-
+		//WARNING_EX_LOG("");
 		m_msg_handler[msg_id].msg_name = msg_name;//   数据统计
 		m_msg_handler[msg_id].handle_count = 0;
 		m_msg_handler[msg_id].handler = handler;

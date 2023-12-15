@@ -1,23 +1,13 @@
 /***********************************************************************************************
-created: 		2019-05-13
+created: 		2019-05-19
 
 author:			chensong
 
-purpose:		msg_base_id
+purpose:		robot_msg_header
 ************************************************************************************************/
+#include "crobot_msg_header.h"
 
-
-#ifndef _C_MSG_BASE_ID_H_
-#define _C_MSG_BASE_ID_H_
 
 namespace chen {
-	enum EMsgBaseID
-	{
-		Msg_Client_Max = 3000,
-	 
-		Msg_Max,
-	};
 
-}// namespace chen
-
-#endif // !#define _C_MSG_BASE_ID_H_
+}//namespace chen 

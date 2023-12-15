@@ -8,22 +8,22 @@ purpose:		noncopyable
 Copyright boost
 ************************************************************************************************/
 
-#ifndef _C_NONCOPYABLE_H_
-#define _C_NONCOPYABLE_H_
+#ifndef _C_NONCOPYTABLE_H_
+#define _C_NONCOPYTABLE_H_
 
 namespace chen
 {
 
-	class cnoncopyable
+	class cnoncopytable
 	{
 	public:
-		cnoncopyable() {}
-		~cnoncopyable() {}
+		cnoncopytable() {}
+		~cnoncopytable() {}
 	private:
 		//cnoncopyable(cnoncopyable&&);
-		cnoncopyable(const cnoncopyable&);
+		cnoncopytable(const cnoncopytable&);
 		//cnoncopyable &operator =(cnoncopyable &&);
-		cnoncopyable& operator=(const cnoncopyable&);
+		cnoncopytable& operator=(const cnoncopytable&);
 	};
 
 } //namespace chen

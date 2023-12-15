@@ -23,6 +23,16 @@
     <ClCompile Include="cwan_session.cpp">
       <Filter>server</Filter>
     </ClCompile>
+    <ClCompile Include="csession_handler.cpp">
+      <Filter>handler</Filter>
+    </ClCompile>
+    <ClCompile Include="log.cpp" />
+    <ClCompile Include="casync_write_file.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="crobot_msg_header.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cglobal_db.h">
@@ -46,6 +56,13 @@
     <ClInclude Include="cwan_session.h">
       <Filter>server</Filter>
     </ClInclude>
+    <ClInclude Include="log.h" />
+    <ClInclude Include="casync_write_file.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="crobot_msg_header.h">
+      <Filter>util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="server">
@@ -65,6 +82,9 @@
     </Filter>
     <Filter Include="handler">
       <UniqueIdentifier>{58b1d186-3fad-40eb-a87b-2878040e33c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logic">
+      <UniqueIdentifier>{75dd01c7-e80b-4ebd-b086-aff95e8b4bfd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

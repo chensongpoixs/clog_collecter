@@ -7,7 +7,7 @@ purpose:		config
 ************************************************************************************************/
 #ifndef _C_CONFIG_H_
 #define _C_CONFIG_H_
-#include "cnoncopyable.h"
+#include "cnoncopytable.h"
 #include <map>
 #include <unordered_map>
 #include <string>
@@ -17,7 +17,7 @@ purpose:		config
 #include <string>
 #include "cnet_type.h"
 namespace chen {
-	class ccfg_file : private cnoncopyable
+	class ccfg_file : private cnoncopytable
 	{
 	private:
 		typedef std::unordered_map<std::string, std::string>	CCONFIG_MAP;
@@ -40,7 +40,7 @@ namespace chen {
 	private:
 		CCONFIG_MAP								m_config_map;
 	};
-	class cconfig : private cnoncopyable
+	class cconfig : private cnoncopytable
 	{
 	public:
 		explicit cconfig();
