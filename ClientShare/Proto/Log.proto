@@ -1,0 +1,46 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+ 
+ 
+
+
+
+
+ 
+
+// 情况非常特殊
+message MC2S_Login
+{ 
+}
+
+
+message MS2C_Login
+{
+	optional 		int32 		           result 			= 1;
+	optional 		int32 				   log_level 		    = 2; //日志级别
+	optional  		int32                  log_mode 		= 3; //日志模式
+}
+
+
+message MC2S_LogDataUpdate
+{
+	optional 		string 				   log_data  		= 1; //日志数据
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

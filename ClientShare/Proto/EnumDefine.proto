@@ -1,0 +1,17 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+
+enum EMediasoupType
+{
+	EMediasoupInit 					= 1;
+	EMediasoupStartup				= 2;
+	EMediasoupWebsocketInit 		= 3;
+	EMediasoupWebsocketConnected  	= 4; 
+	EMediasoupWebsocketJoin 		= 5;
+	EMediasoupWebsocketProduce 		= 6; 
+	EMediasoupWebsocketVideoPause 	= 7;
+	EMediasoupWebsocketVideoResume 	= 8;
+	EMediasoupWebsocketDestroy 		= 9; //---> connected
+	EMediasoupDestroy 				= 10;
+}

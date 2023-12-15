@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\common\cmysql\cdb_cfg.cpp" />
+    <ClCompile Include="..\common\cmysql\cdb_mysql.cpp" />
+    <ClCompile Include="..\common\cmysql\cdb_out_info.cpp" />
+    <ClCompile Include="..\common\cmysql\cdb_query_result.cpp" />
+    <ClCompile Include="..\common\cmysql\cdb_version.cpp" />
+    <ClCompile Include="..\common\cmysql\csql_mgr.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\common\cmysql\cdb_cfg.h" />
+    <ClInclude Include="..\common\cmysql\cdb_mysql.h" />
+    <ClInclude Include="..\common\cmysql\cdb_out_info.h" />
+    <ClInclude Include="..\common\cmysql\cdb_query_result.h" />
+    <ClInclude Include="..\common\cmysql\cdb_util.h" />
+    <ClInclude Include="..\common\cmysql\cdb_version.h" />
+    <ClInclude Include="..\common\cmysql\csql_mgr.h" />
+  </ItemGroup>
+</Project>

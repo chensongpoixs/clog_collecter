@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="ccfg.cpp">
+      <Filter>cfg</Filter>
+    </ClCompile>
+    <ClCompile Include="cglobal_db.cpp">
+      <Filter>db</Filter>
+    </ClCompile>
+    <ClCompile Include="cmsg_dispatch.cpp">
+      <Filter>dispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="cguard_reply.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="ctime_mgr.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="cwan_server.cpp">
+      <Filter>server</Filter>
+    </ClCompile>
+    <ClCompile Include="cwan_session.cpp">
+      <Filter>server</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cglobal_db.h">
+      <Filter>db</Filter>
+    </ClInclude>
+    <ClInclude Include="ccfg.h">
+      <Filter>cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="cmsg_dispatch.h">
+      <Filter>dispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="cguard_reply.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="ctime_mgr.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="cwan_server.h">
+      <Filter>server</Filter>
+    </ClInclude>
+    <ClInclude Include="cwan_session.h">
+      <Filter>server</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="server">
+      <UniqueIdentifier>{f2cf3a76-ce6f-4e85-ab0e-53ed6fae8d91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="db">
+      <UniqueIdentifier>{197c328e-7dbe-481c-973f-a6b3ff3b0533}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cfg">
+      <UniqueIdentifier>{48cfeb02-cfde-4970-b8a9-c38becea597c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dispatch">
+      <UniqueIdentifier>{1061449a-0861-4d9e-9cdf-a178409a396c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="util">
+      <UniqueIdentifier>{0c0c3fad-b6fc-4716-992f-f9d2d4208f8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="handler">
+      <UniqueIdentifier>{58b1d186-3fad-40eb-a87b-2878040e33c7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

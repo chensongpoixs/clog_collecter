@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="msg">
+      <UniqueIdentifier>{10ba13ba-8478-412d-9b5c-b520e33edcfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="version">
+      <UniqueIdentifier>{ed9d7add-c961-46f6-b448-d2d8ab414c01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="config">
+      <UniqueIdentifier>{bbc4c97b-4b12-45f2-b8f3-4722d2e14b63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cclient_msg">
+      <UniqueIdentifier>{ae6c77e4-a2d4-4d36-859c-a363d9b53b1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="server_msg">
+      <UniqueIdentifier>{5ca220cb-9b66-4dcd-8ced-2721e2f98259}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cmsg_base_id.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="build_version.h">
+      <Filter>version</Filter>
+    </ClInclude>
+    <ClInclude Include="cserver_cfg.h">
+      <Filter>config</Filter>
+    </ClInclude>
+    <ClInclude Include="cclient_msg\EnumDefine.pb.h">
+      <Filter>cclient_msg</Filter>
+    </ClInclude>
+    <ClInclude Include="cclient_msg\ErrorCode.pb.h">
+      <Filter>cclient_msg</Filter>
+    </ClInclude>
+    <ClInclude Include="cclient_msg\MsgID.pb.h">
+      <Filter>cclient_msg</Filter>
+    </ClInclude>
+    <ClInclude Include="cserver_msg_header.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="cclient_msg\Log.pb.h">
+      <Filter>cclient_msg</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cserver_cfg.cpp">
+      <Filter>config</Filter>
+    </ClCompile>
+    <ClCompile Include="cclient_msg\EnumDefine.pb.cc">
+      <Filter>cclient_msg</Filter>
+    </ClCompile>
+    <ClCompile Include="cclient_msg\ErrorCode.pb.cc">
+      <Filter>cclient_msg</Filter>
+    </ClCompile>
+    <ClCompile Include="cclient_msg\MsgID.pb.cc">
+      <Filter>cclient_msg</Filter>
+    </ClCompile>
+    <ClCompile Include="cserver_msg_header.cpp">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="cclient_msg\Log.pb.cc">
+      <Filter>cclient_msg</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
