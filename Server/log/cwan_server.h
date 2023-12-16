@@ -69,8 +69,7 @@ namespace chen {
 		* @param session_id	Á¬½Óid
 		*/
 		void close(uint32 session_id);
-	private:
-		void _auth_connect();
+	private: 
 	private:
 		bool index_valid(uint32 index) { return index < m_max_session_num; }
 		uint32 get_session_index(uint32 session_id) { return session_id & 0X0000FFFF; }

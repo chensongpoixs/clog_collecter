@@ -59,6 +59,9 @@ namespace chen {
 
 	bool ccfg::init_more()
 	{
+
+		set_string(ECI_LogCollector, "log_collector_path", "./log_collector");
+		set_uint32(ECI_LogCollectorRows, "log_collector_rows", 1000000);
 		return true;
 	}
 }//namespace chen 

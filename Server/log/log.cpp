@@ -19,6 +19,8 @@ purpose:		ccfg
 #include "cdb_version.h" 
 #include "cglobal_db.h" 
 #include "cmsg_dispatch.h"
+#include "cglobal_log_data_mgr.h"
+#include "clog_insert_mgr.h"
 namespace chen {
 	log		g_log;
 	log::log()
@@ -100,6 +102,13 @@ namespace chen {
 		{
 			return false;
 		}
+
+		SYSTEM_LOG("check sql ...");
+		if (!g_global_log_data_mgr.init())
+		{
+			return false;
+		}
+		 
 		SYSTEM_LOG("wan server  init ...");
 		if (!g_wan_server.init())
 		{
@@ -130,7 +139,7 @@ namespace chen {
 			//g_dongle_auth_mgr.update(uDelta);
 			g_wan_server.update(uDelta);
 
-
+			g_global_log_data_mgr.update(uDelta);
 
 			uDelta = time_elapse.get_elapse();
 
@@ -158,6 +167,8 @@ namespace chen {
 		//SYSTEM_LOG("dongle atuh destroy OK !!!");
 		//g_global_dongle_auth_db.destroy();
 		//SYSTEM_LOG("g_global_dongle_auth_db destroy  OK !!!");
+		SYSTEM_LOG("global log data destory OK !!!");
+		g_global_log_data_mgr.destroy();
 
 		g_global_log_db.destroy();
 		SYSTEM_LOG("g_global_log_db destroy  OK !!!");

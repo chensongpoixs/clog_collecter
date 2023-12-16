@@ -281,15 +281,6 @@ namespace chen {
 		}
 	}
 
-	void cwan_server::_auth_connect()
-	{
-		//if (g_cfg.get_uint32(ECI_EnableCentral))
-		{
-			if (!m_net_ptr->connect_to(0, g_cfg.get_string(ECI_WanIp), g_cfg.get_uint32(ECI_WanPort)))
-			{
-				WARNING_EX_LOG("connect central failed !!! [ip = %s][port = %u]", g_cfg.get_string(ECI_WanIp).c_str(), g_cfg.get_uint32(ECI_WanPort));
-			}
-		}
-	}
+	 
 
 }//namespace chen 

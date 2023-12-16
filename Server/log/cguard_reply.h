@@ -18,15 +18,15 @@ namespace chen {
 	class cguard_reply
 	{
 	public:
-		cguard_reply(uint16 msg_id, const ::google::protobuf::MessageLite& msg, cwan_session* session_ptr)
+		cguard_reply(uint16 msg_id, const ::google::protobuf::MessageLite& msg, uint32 session_id)
 			: m_msg_id(msg_id)
 			, m_message(msg)
-			, m_session_ptr(session_ptr) {  }
+			, m_session_id(session_id) {  }
 		~cguard_reply();
 	private:
 		uint16									m_msg_id;
 		const ::google::protobuf::MessageLite&	m_message; 
-		cwan_session*							m_session_ptr;
+		uint32							m_session_id;
 
 	};
 

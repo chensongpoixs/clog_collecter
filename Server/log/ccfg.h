@@ -32,7 +32,10 @@ namespace chen {
 	enum ECloudIndex
 	{
 		  
-		ECI_Max = ECI_ServerMax,
+		ECI_LogConfig = ECI_ServerMax,
+		ECI_LogCollector,
+		ECI_LogCollectorRows,
+		ECI_Max
 		  
 	}; 
 	class ccfg : public cserver_cfg

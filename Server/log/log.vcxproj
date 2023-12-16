@@ -148,7 +148,10 @@
     <ClCompile Include="casync_write_file.cpp" />
     <ClCompile Include="ccfg.cpp" />
     <ClCompile Include="cglobal_db.cpp" />
+    <ClCompile Include="cglobal_log_data_mgr.cpp" />
     <ClCompile Include="cguard_reply.cpp" />
+    <ClCompile Include="clog_insert_data.cpp" />
+    <ClCompile Include="clog_insert_mgr.cpp" />
     <ClCompile Include="crobot_msg_header.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="cmsg_dispatch.cpp" />
@@ -162,7 +165,11 @@
     <ClInclude Include="casync_write_file.h" />
     <ClInclude Include="ccfg.h" />
     <ClInclude Include="cglobal_db.h" />
+    <ClInclude Include="cglobal_log_data_mgr.h" />
     <ClInclude Include="cguard_reply.h" />
+    <ClInclude Include="clog_insert_base.h" />
+    <ClInclude Include="clog_insert_data.h" />
+    <ClInclude Include="clog_insert_mgr.h" />
     <ClInclude Include="crobot_msg_header.h" />
     <ClInclude Include="log.h" />
     <ClInclude Include="cmsg_dispatch.h" />

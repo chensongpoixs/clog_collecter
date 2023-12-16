@@ -34,12 +34,12 @@ namespace chen {
 	void	cwan_session::handler_client_login(const void* ptr, uint32 msg_size)
 	{
 		PRASE_CLIENT_MSG(ptr, C2S_Login, msg_size);
-		CGUARD_REPLY(S2C_Login, this);
+		CGUARD_REPLY(S2C_Login, m_session_id);
 	}
 	void    cwan_session::handler_client_log_data_update(const void* ptr, uint32 msg_size)
 	{
 		PRASE_CLIENT_MSG(ptr, C2S_LogDataUpdate, msg_size);
-		 
+		m_async_write_file.push(msg);
 	}
 
 

@@ -33,6 +33,15 @@
     <ClCompile Include="crobot_msg_header.cpp">
       <Filter>util</Filter>
     </ClCompile>
+    <ClCompile Include="clog_insert_data.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="clog_insert_mgr.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="cglobal_log_data_mgr.cpp">
+      <Filter>global_logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cglobal_db.h">
@@ -63,6 +72,18 @@
     <ClInclude Include="crobot_msg_header.h">
       <Filter>util</Filter>
     </ClInclude>
+    <ClInclude Include="clog_insert_base.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="clog_insert_data.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="clog_insert_mgr.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="cglobal_log_data_mgr.h">
+      <Filter>global_logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="server">
@@ -85,6 +106,9 @@
     </Filter>
     <Filter Include="logic">
       <UniqueIdentifier>{75dd01c7-e80b-4ebd-b086-aff95e8b4bfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="global_logic">
+      <UniqueIdentifier>{b73f3a97-3a90-4fe8-83d0-ff490d9ddbe3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

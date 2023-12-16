@@ -19,7 +19,11 @@
 			安静，淡然，代码就是我的一切，写代码就是我本心回归的最好方式，我还没找到本心猎手，但我相信，顺着这个线索，我一定能顺藤摸瓜，把他揪出来。
 ************************************************************************************************/
 #include "casync_write_file.h"
-
+#include "ccfg.h"
+#include "ctime_mgr.h"
+#include "ctime_api.h"
+#include <boost/filesystem.hpp>
+#include "cglobal_log_data_mgr.h"
 namespace chen {
 
 
@@ -33,6 +37,11 @@ namespace chen {
 	{
 		m_remote_ip = remote_ip;
 		m_client_type = client_type;
+		m_log_path = g_cfg.get_string(ECI_LogCollector);
+		m_cur_log_file_rows = 0;
+		m_log_file_rows = g_cfg.get_uint32(ECI_LogCollectorRows);
+		m_stoped = false;
+		m_thread = std::thread(&casync_write_file::_work_pthread, this);
 		return true;
 	}
 
@@ -50,18 +59,31 @@ namespace chen {
 		m_client_type = 0;
 		m_log_lists.clear();
 		m_remote_ip.clear();
+		if (m_log_file_ptr)
+		{
+			::fflush(m_log_file_ptr);
+			::fclose(m_log_file_ptr);
+			m_log_file_ptr = NULL;
+		}
+		m_cur_log_file_rows = 0;
+	}
+
+	void casync_write_file::push(const MC2S_LogDataUpdate& msg)
+	{
+		clock_guard lock(m_log_lists_lock);
+		m_log_lists.push_back(msg);
 	}
 
 	void casync_write_file::_work_pthread()
 	{
+		m_cur_log_file_rows = 0;
 		 MC2S_LogDataUpdate log_data;
 		while (!m_stoped || !m_log_lists.empty())
 		{
 			{
 				std::unique_lock<std::mutex> lock(m_log_lists_lock);
 				m_condition.wait(lock, [this]() {return m_log_lists.size() > 0 || m_stoped; });
-			}
-			//_handler_check_log_file();
+			} 
 			while (!m_log_lists.empty())
 			{
 				{
@@ -69,23 +91,76 @@ namespace chen {
 					log_data = m_log_lists.front();
 					m_log_lists.pop_front();
 				}
-
-				//if (!log_item_ptr)
-				//{
-				//	continue;
-				//}
-				//
-				//_handler_log_item(log_item_ptr);
-				//
-				//if (log_item_ptr->buf)
-				//{
-				//	delete[] log_item_ptr->buf;
-				//}
-				//
-				//delete log_item_ptr;
-
+				_handler_check_log_file();
+				_handler_write_log(log_data); 
+			}
+			if (m_log_file_ptr)
+			{
+				::fflush(m_log_file_ptr);;
 			}
 		}
+	}
+
+	void casync_write_file::_handler_check_log_file()
+	{
+		if (!m_log_file_ptr || m_cur_log_file_rows > m_log_file_rows)
+		{
+			m_cur_log_file_rows = 0;
+			// create log name [20231216]/[ip client_type timestamp]
+			char buff[ASCII_DATETIME_LEN] = {0};
+			chen::ctime_base_api::time64_datetime_format(::time(NULL), buff, 0, 0, 0);
+			std::string log_name_path = m_log_path +"/" + buff + "/";
+
+
+			//检查目录是否存在, 不存在则创建
+			boost::filesystem::path log_path(log_name_path);
+			if (!boost::filesystem::exists(log_path))
+			{
+				boost::system::error_code ec;
+				boost::filesystem::create_directories(log_path, ec);
+			}
+			char buffer[ASCII_DATETIME_LEN] = { 0 };
+			chen::ctime_base_api::time64_datetime_format(::time(NULL), buffer, 1, 0, 1);
+			std::string log_name = m_remote_ip + "_" + std::to_string(m_client_type) + "_" + buffer + ".log";
+			
+			
+			log_name_path += log_name;
+
+			if (m_log_file_ptr)
+			{
+				::fflush(m_log_file_ptr);
+				::fclose(m_log_file_ptr);
+				m_log_file_ptr = NULL;
+			}
+
+			m_log_file_ptr = ::fopen(log_name_path.c_str(), "wb+");
+			if (!m_log_file_ptr)
+			{
+				WARNING_EX_LOG("not create file(%s) failed !!!", log_name_path.c_str());
+				return;
+			}
+			clog_collector collector;
+			collector.address = m_remote_ip;
+			collector.client_type = m_client_type;
+			collector.timestamp = ::time(NULL);
+			collector.log_file_name = std::string(buff) + "/" + log_name;
+			g_global_log_data_mgr.push(collector);
+		}
+
+		 
+	}
+
+	void casync_write_file::_handler_write_log(const MC2S_LogDataUpdate& msg)
+	{
+		if (!m_log_file_ptr)
+		{
+			WARNING_EX_LOG("log file ptr == null !!! [remote_ip = %s][client_type = %u]", m_remote_ip.c_str(), m_client_type);
+			return;
+		}
+		::fwrite(msg.log_data().c_str(), msg.log_data().length(), 1, m_log_file_ptr);
+		//::fflush(m_log_file_ptr);
+
+
 	}
 
 }

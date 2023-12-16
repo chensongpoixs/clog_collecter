@@ -43,7 +43,11 @@ namespace chen {
 			, m_log_lists()
 			, m_log_lists_lock()
 			, m_remote_ip("")
-			, m_client_type(0){}
+			, m_client_type(0)
+			, m_log_path("")
+			, m_log_file_ptr(NULL)
+			, m_cur_log_file_rows(0)
+			, m_log_file_rows(0){}
 		virtual ~casync_write_file();
 
 
@@ -55,8 +59,13 @@ namespace chen {
 
 	public:
 		//void set_remote_ip(const char* ip) { m_remote_ip = ip; }
+
+		void push(const MC2S_LogDataUpdate& msg);
 	private:
 		void _work_pthread();
+	private:
+		void _handler_check_log_file();
+		void _handler_write_log(const MC2S_LogDataUpdate & msg);
 	private:
 
 		bool					m_stoped;
@@ -67,7 +76,10 @@ namespace chen {
 
 		std::string				m_remote_ip;
 		int32					m_client_type;
-
+		std::string				m_log_path;
+		FILE*					m_log_file_ptr;
+		uint32					m_cur_log_file_rows;
+		uint32					m_log_file_rows;
 	};
 }
 
