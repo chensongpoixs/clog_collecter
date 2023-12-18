@@ -5,6 +5,11 @@
 #include <chrono>
 
 #include <csignal>
+#if _DEBUG
+#pragma comment(lib, "log_collectord.lib")
+#else
+#pragma comment(lib, "log_collector.lib")
+#endif 
 bool test_stoped = false;
 void Stop(int i)
 {
@@ -21,7 +26,7 @@ void RegisterSignal()
 }
 
 
-int ffmain(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
 	RegisterSignal();
 	test_stoped = false;

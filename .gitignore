@@ -22,3 +22,4 @@
 /Server/common/cclient_msg
 /Server/.vs
 /Server/log_collector/log
+/Server/log_collector_client/log_collector_client.vcxproj.user

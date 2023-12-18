@@ -12,6 +12,7 @@ purpose:		�����
 #include "clog_collector_server.h"
 namespace chen {
 	static bool g_log_server_stoped = false;
+
 	clog_collector::clog_collector()
 		:m_len(0)
 		, m_level(ELogCollectorLevel_None)
