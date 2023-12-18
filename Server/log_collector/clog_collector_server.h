@@ -13,6 +13,8 @@ purpose:		robot
 #include "clog_collector.h"
 #include <vector>
 #include <mutex>
+#include "casync_log_queue.h"
+#include "csingleton.h"
 namespace chen {
 	class clog_collector_server : private cnoncopytable
 	{
@@ -20,12 +22,20 @@ namespace chen {
 		explicit clog_collector_server();
 		~clog_collector_server();
 	public:
-		bool init(const char* ip, uint16_t port);
+		bool init(const char* ip, uint16_t port, bool show_screen = false);
 		void Loop();
 		void destroy();
 		static void stop();
  
  
+	public:
+
+
+		void append_fix(ELogCollectorLevelType level, const void* str, unsigned int len);
+		void append_var(ELogCollectorLevelType level, const char* format, va_list ap);
+
+		void set_level(ELogCollectorLevelType level);
+		ELogCollectorLevelType get_level() const;
 	public:
 	//	void result_dongle_auth(int32_t result, const char *  data);
 
@@ -36,9 +46,10 @@ namespace chen {
 	private:
 		 
 		static volatile bool								m_stoped; 
+		casync_log_queue									m_async_log_queue;
 	};
-
-	extern clog_collector_server g_log_collector_server;
+	 #define s_log_collector_server   chen::csingleton<chen::clog_collector_server>::get_instance()
+	//extern clog_collector_server g_log_collector_server;
 } //namespace chen 
 
 #endif // !#define _C_LOG_COLLECTOR_SERVER_H_

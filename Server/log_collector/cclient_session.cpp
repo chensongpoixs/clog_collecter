@@ -27,7 +27,7 @@ namespace chen {
 		, m_encrypt_byte_ptr(NULL)*/
 	{
 		//handler_login
-		//m_client_handler_map.insert(std::make_pair(S2C_RteInfo, &cclient_session::handler_rte_info));
+		 m_client_handler_map.insert(std::make_pair(S2C_Login, &cclient_session::handler_login));
 		//m_client_handler_map.insert(std::make_pair(S2C_EncryptKey, &cclient_session::handler_rte_encrypt));
 		//m_client_handler_map.insert(std::make_pair(S2C_RteInfo, &cclient_session::handler_rte_info));
 		//m_encrypt_byte_ptr = new unsigned char[1024 * 30];
@@ -68,19 +68,16 @@ namespace chen {
 	{
 		//std::string message ((char *)pMsgPtr, size);
 		 //encrypt(message.c_str(), (void*)message.data(), message.length());
-		return g_lan_client.send_msg(m_session_id, msg_id, pMsgPtr, size);
+		return s_lan_client.send_msg(m_session_id, msg_id, pMsgPtr, size);
 	}
 
 	bool cclient_session::send_msg(uint16_t msg_id, const ::google::protobuf::MessageLite& msg)
 	{
 		//std::string message(msg.SerializeAsString());
 		//encrypt(message.c_str(), (void*)message.data(), message.length());
-		return g_lan_client.send_msg(m_session_id, msg_id, msg.SerializeAsString().c_str(), msg.ByteSize());
+		return s_lan_client.send_msg(m_session_id, msg_id, msg.SerializeAsString().c_str(), msg.ByteSize());
 	}
-	void cclient_session::handler_heatbeat(const void* msg_ptr, uint32_t msg_size)
-	{
-
-	}
+	
 	 
 	
 	void cclient_session::update(uint32 elapse)
@@ -104,9 +101,9 @@ namespace chen {
 		{
 			//g_agent_client.send_rte_info();
 		//	m_send_rte_info = ::time(NULL) + 60;
-			MC2S_LogDataUpdate log_data;
-			log_data.set_log_data("chensong\n");
-			send_msg(C2S_LogDataUpdate, log_data );
+			//MC2S_LogDataUpdate log_data;
+			//log_data.set_log_data("chensong\n");
+			//send_msg(C2S_LogDataUpdate, log_data );
 		}
 	}
 	bool cclient_session::is_used()

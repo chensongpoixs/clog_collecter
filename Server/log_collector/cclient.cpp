@@ -17,11 +17,12 @@ namespace  chen {
 	
 	std::string g_ip;
 	uint16_t g_port;
-	cclient	g_lan_client;
+	//cclient	g_lan_client;
 	cclient::cclient()
 		:m_net_ptr(NULL)
-		, m_stoped(false) 
+		, m_stoped(false)
 		, m_update_timer(0)
+		//, m_aysnc_log_queue()
 	{
 	}
 	cclient::~cclient()
@@ -59,6 +60,7 @@ namespace  chen {
 		);
 
 		m_net_ptr->set_max_msg_size(recv_buf_size);
+		
 		return true;
 	}
 	void cclient::destroy()
@@ -224,7 +226,7 @@ namespace  chen {
 		return true;
 	}
 
-	 
+	
 	void cclient::close( )
 	{
 		m_net_ptr->close(s_agent_client_session.get_session_id());

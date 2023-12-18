@@ -1,13 +1,16 @@
 #include <iostream>
-#include "clog_collector_server.h"
-
-
+//#include "clog_collector_server.h"
+#include "clog_collector.h"
+#include <thread>
+#include <chrono>
 
 #include <csignal>
+bool test_stoped = false;
 void Stop(int i)
 {
-
-	chen::g_log_collector_server.stop();
+	test_stoped = true;
+	chen::LOG_COLLECTOR::destroy();
+	//s_log_collector_server.stop();
 }
 
 void RegisterSignal()
@@ -21,7 +24,7 @@ void RegisterSignal()
 int main(int argc, char* argv[])
 {
 	RegisterSignal();
-
+	test_stoped = false;
 	//const char* config_filename = "client.cfg";
 	////chen::check_file(config_filename);
 	//if (argc > 1)
@@ -37,15 +40,25 @@ int main(int argc, char* argv[])
 	const char* wan_ip = "192.168.1.175";
 	const uint16_t wan_port = 8000;
 
+	chen::LOG_COLLECTOR::init(wan_ip, wan_port, true);
 
-	bool init = chen::g_log_collector_server.init(wan_ip, wan_port);
+	while (!test_stoped)
+	{
+		using namespace chen;
+
+		LOG_COLLECTOR_WARN << 3 << "chensong" << "pppppp--->";
+		ERROR_EX_LOG_COLLECTOR("chensong");
+		//LOG_COLLECTOR_SYSTEM()// << "chensong--->";
+		std::this_thread::sleep_for(std::chrono::microseconds(100));
+	}
+	/*bool init = s_log_collector_server.init(wan_ip, wan_port);
 
 	 
 
-	chen::g_log_collector_server.Loop();
+	s_log_collector_server.Loop();
 	 
 
-	chen::g_log_collector_server.destroy();
+	s_log_collector_server.destroy();*/
 	 
 
 	return EXIT_SUCCESS;

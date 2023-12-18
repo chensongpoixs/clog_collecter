@@ -53,7 +53,7 @@ namespace chen {
 
 		void handler_heatbeat(const void * msg_ptr, uint32_t msg_size);
 
-		 
+		void handler_login(const void * msg_ptr, uint32_t msg_size);
 	public:
 		void send_login();
 	public:

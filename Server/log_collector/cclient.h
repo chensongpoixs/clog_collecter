@@ -12,7 +12,8 @@ purpose:		网络层
 #include "cnoncopytable.h"
 #include "cnet_mgr.h"
 #include <atomic>
-
+#include "casync_log_queue.h"
+#include "csingleton.h"
 namespace chen {
 	class cclient :private cnoncopytable
 	{
@@ -37,6 +38,15 @@ namespace chen {
 		bool send_msg(uint32 session_id, uint16 msg_id, const void* p, uint32 size);
 		 
  
+
+	public:
+
+
+		/*void append_fix(ELogCollectorLevelType level, const void* str, unsigned int len);
+		void append_var(ELogCollectorLevelType level, const char* format, va_list ap);
+
+		void set_level(ELogCollectorLevelType level);
+		ELogCollectorLevelType get_level() const;*/
 	public:
 		/**
 		* 关闭指定连接
@@ -50,9 +60,10 @@ namespace chen {
 		bool						m_stoped;
 		 
 		uint32						m_update_timer;
+	//	casync_log_queue			m_aysnc_log_queue;
 	};
-
-	extern cclient	g_lan_client;
+	 #define s_lan_client   chen::csingleton<chen::cclient>::get_instance()
+	//extern cclient	g_lan_client;
 	extern std::string g_ip;
 	extern uint16_t g_port;
 }

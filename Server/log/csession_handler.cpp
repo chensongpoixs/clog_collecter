@@ -27,7 +27,8 @@ purpose:	ÍøÂçÊý¾ÝµÄÊÕ·¢
 #include "cwan_session.h"
 #include "cguard_reply.h"
 #include "crobot_msg_header.h"
-
+#include "cglobal_db.h"
+#include "cdb_query_result.h"
 namespace chen {
 
 
@@ -36,6 +37,47 @@ namespace chen {
 		PRASE_CLIENT_MSG(ptr, C2S_Login, msg_size);
 		CGUARD_REPLY(S2C_Login, m_session_id);
 		m_async_write_file.init(m_remote_ip.c_str(), msg.client_type());
+		//////////////////////////
+		//// 查询数据中数据
+		enum EField
+		{
+			EF_log_level = 0,
+		};
+
+		 g_sql_mgr.reset();
+		 g_sql_mgr << "SELECT    `log_level`  FROM `t_user_log_collector_info`  WHERE `address` = '" << m_remote_ip << "' and `client_type` = " << msg.client_type() << " ";
+		
+		 cdb_query_result query_result;
+
+
+		if (!g_global_log_db.send_query(query_result, g_sql_mgr))
+		{
+			WARNING_EX_LOG("g_global_log_db.send_query error !!!   [msg.client_type()  = %u][address = %s]", msg.client_type() , m_remote_ip.c_str());
+			//err.assign("sql query error");
+			//;reply.set_result(EEC_DongleAuthDb);
+			return;
+		}
+
+		if (!query_result.next_row())
+		{
+			WARNING_EX_LOG("not find  [msg.client_type()  = %u][address = %s]", msg.client_type(), m_remote_ip.c_str());
+			//err.assign("order not found");
+			//reply.set_result(EEC_DongleAuthNotAppid);
+			return;
+		}
+
+		const uint32 log_level = query_result.get_uint32(EF_log_level);
+		reply.set_log_level(log_level);
+		//const char* default_project_id = query_result.get_col_value(EF_default_project_id);
+		//if (default_project_id != msg.projectid())
+		//{
+		//	WARNING_EX_LOG("[appid = %s][client project_id = %s ==> db default_project_id = %s] !!!", msg.appid().c_str(), msg.projectid().c_str(), default_project_id);
+		//	reply.set_result(EEC_DongLeAuthLoadDefaultProject);
+		//	return;
+		//}
+
+
+		
 	}
 	void    cwan_session::handler_client_log_data_update(const void* ptr, uint32 msg_size)
 	{

@@ -8,6 +8,7 @@
     <ClCompile Include="crobot_msg_header.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="csession_handler.cpp" />
+    <ClCompile Include="casync_log_queue.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="clog_collector.h" />
@@ -15,5 +16,6 @@
     <ClInclude Include="cclient_session.h" />
     <ClInclude Include="clog_collector_server.h" />
     <ClInclude Include="crobot_msg_header.h" />
+    <ClInclude Include="casync_log_queue.h" />
   </ItemGroup>
 </Project>

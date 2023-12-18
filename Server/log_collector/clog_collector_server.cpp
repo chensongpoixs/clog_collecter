@@ -28,21 +28,30 @@ purpose:		robot
 
 
 namespace chen {
-	clog_collector_server g_log_collector_server;
+	//clog_collector_server g_log_collector_server;
 	const uint32_t TICK_TIME = 200;
 	volatile bool clog_collector_server::m_stoped = false;
 	clog_collector_server::clog_collector_server() 
+		: m_async_log_queue()
 	{
 	}
 	clog_collector_server::~clog_collector_server()
 	{
 	}
-	bool clog_collector_server::init(const char *ip, uint16_t port)
+	bool clog_collector_server::init(const char *ip, uint16_t port, bool show_screen)
 	{
 		g_ip = ip;
 		g_port = port;
-		LOG::init("./log", "log_collector");
-		if (false == g_lan_client.init())
+		//LOG::init("./log", "log_collector");
+
+		SYSTEM_LOG("async_log_queue init ... ");
+
+		
+		if (!m_async_log_queue.init(show_screen))
+		{
+			return false;
+		}
+		if (false == s_lan_client.init())
 		{
 			ERROR_LOG("[%s] client init error!", __FUNCTION__);
 			return false;
@@ -51,7 +60,7 @@ namespace chen {
 
 		
 	
-		if (false == g_lan_client.startup())
+		if (false == s_lan_client.startup())
 		{
 			ERROR_LOG("[%s] client start error!", __FUNCTION__);
 			return false;
@@ -80,14 +89,15 @@ namespace chen {
 			elapse = static_cast<uint32_t>(ms.count());
 			pre_time = cur_time;
 
-			g_lan_client.update(elapse);
+			s_lan_client.update(elapse);
+			m_async_log_queue.update(elapse);
 		//	g_timer_mgr.update(elapse);
 			/*g_login_mgr.update(elapse);
 			g_friend_circle_http_mgr.update(elapse);
 			g_test_case_mgr.update(elapse);*/
 			//ERROR_EX_LOG("elapse = %d, timer = %d", elapse , g_timer_mgr.get_second_timestamp());
 			cur_time = steady_clock::now();
-
+			NORMAL_EX_LOG("---->");
 			dur = cur_time - pre_time;
 			ms = duration_cast<milliseconds>(dur);
 			elapse = static_cast<uint32_t>(ms.count());
@@ -97,29 +107,34 @@ namespace chen {
 			}
 		}
 		 
-		 
+		SYSTEM_LOG("log collector server Main Loop exit !!!");
 	}
 	void clog_collector_server::destroy()
 	{
 		 
 		// WAN�ر�
-		g_lan_client.shutdown();
+		s_lan_client.shutdown();
 		SYSTEM_LOG("client shutdown!");
 		 
 	 
 
 		// wan session ����
-		g_lan_client.destroy();
+		s_lan_client.destroy();
 		SYSTEM_LOG("client destroy!");
 
  
+
+		m_async_log_queue.destroy();
  
+		SYSTEM_LOG("async log queue destroy OK !!!");
 			// �����ļ��˳�
 		//g_cfg.destroy();
 		//SYSTEM_LOG("config destroy!");
 		// log�˳�
 
 		LOG::destroy();
+		SYSTEM_LOG("log destroy OK !!!");
+
 	}
 	void clog_collector_server::stop()
 	{
@@ -239,6 +254,26 @@ namespace chen {
 		std::lock_guard<std::mutex> lock(m_rte_info_mutex);
 		m_rte_info_callback_ptr = callback;
 	}*/
+void clog_collector_server::append_fix(ELogCollectorLevelType level, const void* str, unsigned int len)
+{
+	m_async_log_queue.append_fix(level, str, len);
+}
+
+void clog_collector_server::append_var(ELogCollectorLevelType level, const char* format, va_list ap)
+{
+	m_async_log_queue.append_var(level, format, ap);
+}
+
+void clog_collector_server::set_level(ELogCollectorLevelType level)
+{
+	m_async_log_queue.set_level(level);
+}
+
+ELogCollectorLevelType clog_collector_server::get_level() const
+{
+	return m_async_log_queue.get_level();
+}
+
 
 	 
 }//namespace chen 
