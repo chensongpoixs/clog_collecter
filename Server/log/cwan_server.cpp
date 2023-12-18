@@ -43,8 +43,7 @@ namespace chen {
 		, m_stoped(false)
 		, m_max_session_num(0u)
 		, m_session_ptr(NULL)
-		, m_update_timer(0)
-		, m_encrypt_byte_ptr(NULL)
+		, m_update_timer(0) 
 	{
 	}
 	cwan_server::~cwan_server()
@@ -58,13 +57,13 @@ namespace chen {
 			ERROR_EX_LOG("new cnet_mgr fail");
 			return false;
 		}
-		m_max_session_num = g_cfg.get_uint32(ECI_WanClientMaxNum);
+		m_max_session_num = g_cfg.get_uint32(ECI_LogClientMaxNum);
 		uint32 client_session_num = 0;
 		 
 		m_max_session_num += client_session_num;
-		const uint32 recv_buf_size = g_cfg.get_uint32(ECI_WanInputBufSize);
-		const uint32 send_buf_size = g_cfg.get_uint32(ECI_WanOutputBufSize);
-		const uint32 pool_size = g_cfg.get_uint32(ECI_WanMemPoolSize);
+		const uint32 recv_buf_size = g_cfg.get_uint32(ECI_LogInputBufSize);
+		const uint32 send_buf_size = g_cfg.get_uint32(ECI_LogOutputBufSize);
+		const uint32 pool_size = g_cfg.get_uint32(ECI_LogMemPoolSize);
 		if (!m_net_ptr->init("log", client_session_num, m_max_session_num, send_buf_size, recv_buf_size, pool_size))
 		{
 			return false;
@@ -97,12 +96,14 @@ namespace chen {
 		{
 			m_session_ptr[i].init();
 		}
-		m_encrypt_byte_ptr = new unsigned char[recv_buf_size];
-		if (!m_encrypt_byte_ptr)
-		{
-			ERROR_EX_LOG("alloc encrypt byte failed !!!!");
-			return false;
-		}
+		// m_encrypt_byte_ptr = new unsigned char[recv_buf_size];
+		// if (!m_encrypt_byte_ptr)
+		// {
+		// 	ERROR_EX_LOG("alloc encrypt byte failed !!!!");
+		// 	return false;
+		// }
+
+
 		return true;
 	}
 	void cwan_server::destroy()
@@ -135,13 +136,10 @@ namespace chen {
 		{
 			return false;
 		}
-		if (!m_net_ptr->startup(1, g_cfg.get_string(ECI_WanIp).c_str(), g_cfg.get_uint32(ECI_WanPort)))
+		if (!m_net_ptr->startup(1, g_cfg.get_string(ECI_LogIp).c_str(), g_cfg.get_uint32(ECI_LogPort)))
 		{
 			return false;
-		}
-		 
-		
-
+		} 
 		return true;
 	}
 	void cwan_server::update(uint32 uDeltaTime)

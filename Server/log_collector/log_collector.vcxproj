@@ -46,7 +46,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -85,13 +85,13 @@
     <OutDir>..\lib\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)..\vsout\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <LibraryPath>$(C_INCLUDE)\protobuf\lib\x64\debug;$(C_INCLUDE)\boost\lib\x64;$(ProjectDir)..\lib\$(Platform)\$(Configuration);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
-    <IncludePath>$(C_INCLUDE)\boost\include;$(C_INCLUDE)\protobuf\include;../clib;../common;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>../common/cclient_msg;$(C_INCLUDE)\boost\include;$(C_INCLUDE)\protobuf\include;../clib;../common;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\lib\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)..\vsout\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
-    <IncludePath>$(C_INCLUDE)\boost\include;$(C_INCLUDE)\protobuf\include;../clib;../common;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(C_INCLUDE)\boost\include;$(C_INCLUDE)\protobuf\include;../clib;../common/cclient_msg;../common;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <LibraryPath>$(C_INCLUDE)\protobuf\lib\x64\release;$(C_INCLUDE)\boost\lib\x64;$(ProjectDir)..\lib\$(Platform)\$(Configuration);$(VC_LibraryPath_x64);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -132,6 +132,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>ws2_32.lib;netapi32.lib;version.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;libboost_chrono-vc140-mt-gd-1_60.lib;libboost_date_time-vc140-mt-gd-1_60.lib;libboost_filesystem-vc140-mt-gd-1_60.lib;libboost_locale-vc140-mt-gd-1_60.lib;libboost_regex-vc140-mt-gd-1_60.lib;libboost_system-vc140-mt-gd-1_60.lib;libboost_thread-vc140-mt-gd-1_60.lib;clib.lib;libprotobuf-lited.lib;libprotobufd.lib;libprotocd.lib;common.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -140,7 +141,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;BOOST_USE_WINDOWS_H;WIN32;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;_WINSOCK_DEPRECATED_NO_WARNINGS;_MBCS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -148,13 +149,24 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>ws2_32.lib;netapi32.lib;version.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;libboost_chrono-vc140-mt-1_60.lib;libboost_date_time-vc140-mt-1_60.lib;libboost_filesystem-vc140-mt-1_60.lib;libboost_locale-vc140-mt-1_60.lib;libboost_regex-vc140-mt-1_60.lib;libboost_system-vc140-mt-1_60.lib;libboost_thread-vc140-mt-1_60.lib;clib.lib;libprotobuf-lite.lib;libprotobuf.lib;libprotoc.lib;common.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="cclient.cpp" />
+    <ClCompile Include="cclient_session.cpp" />
     <ClCompile Include="clog_collector.cpp" />
+    <ClCompile Include="clog_collector_server.cpp" />
+    <ClCompile Include="crobot_msg_header.cpp" />
+    <ClCompile Include="csession_handler.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cclient.h" />
+    <ClInclude Include="cclient_session.h" />
     <ClInclude Include="clog_collector.h" />
+    <ClInclude Include="clog_collector_server.h" />
+    <ClInclude Include="crobot_msg_header.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

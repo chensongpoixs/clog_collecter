@@ -78,8 +78,7 @@ namespace chen {
 		bool						m_stoped; 
 		int32						m_max_session_num;
 		cwan_session*				m_session_ptr;
-		uint32						m_update_timer;
-		unsigned char*              m_encrypt_byte_ptr;
+		uint32						m_update_timer; 
 
 	}; 
 	extern cwan_server   g_wan_server;

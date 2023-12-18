@@ -9,10 +9,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "common", "common\common.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "common_mysql", "common_mysql\common_mysql.vcxproj", "{1B681FA7-DF2B-42CF-B072-7746FB38E877}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dongle_auth", "dongle_auth\dongle_auth.vcxproj", "{59025DDF-51FB-4797-8618-464CC8110A8D}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dongle_client", "dongle_client\dongle_client.vcxproj", "{A6228BCF-2AF4-48C2-AB7F-B5642244A819}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "log", "log\log.vcxproj", "{CB7FDCD4-C770-4C67-BEDD-E4B9F87CD008}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "log_collector", "log_collector\log_collector.vcxproj", "{79E5B828-DCF7-40FD-BD44-EF30D19B8475}"
@@ -49,22 +45,6 @@ Global
 		{1B681FA7-DF2B-42CF-B072-7746FB38E877}.Release|x64.Build.0 = Release|x64
 		{1B681FA7-DF2B-42CF-B072-7746FB38E877}.Release|x86.ActiveCfg = Release|Win32
 		{1B681FA7-DF2B-42CF-B072-7746FB38E877}.Release|x86.Build.0 = Release|Win32
-		{59025DDF-51FB-4797-8618-464CC8110A8D}.Debug|x64.ActiveCfg = Debug|x64
-		{59025DDF-51FB-4797-8618-464CC8110A8D}.Debug|x64.Build.0 = Debug|x64
-		{59025DDF-51FB-4797-8618-464CC8110A8D}.Debug|x86.ActiveCfg = Debug|Win32
-		{59025DDF-51FB-4797-8618-464CC8110A8D}.Debug|x86.Build.0 = Debug|Win32
-		{59025DDF-51FB-4797-8618-464CC8110A8D}.Release|x64.ActiveCfg = Release|x64
-		{59025DDF-51FB-4797-8618-464CC8110A8D}.Release|x64.Build.0 = Release|x64
-		{59025DDF-51FB-4797-8618-464CC8110A8D}.Release|x86.ActiveCfg = Release|Win32
-		{59025DDF-51FB-4797-8618-464CC8110A8D}.Release|x86.Build.0 = Release|Win32
-		{A6228BCF-2AF4-48C2-AB7F-B5642244A819}.Debug|x64.ActiveCfg = Debug|x64
-		{A6228BCF-2AF4-48C2-AB7F-B5642244A819}.Debug|x64.Build.0 = Debug|x64
-		{A6228BCF-2AF4-48C2-AB7F-B5642244A819}.Debug|x86.ActiveCfg = Debug|Win32
-		{A6228BCF-2AF4-48C2-AB7F-B5642244A819}.Debug|x86.Build.0 = Debug|Win32
-		{A6228BCF-2AF4-48C2-AB7F-B5642244A819}.Release|x64.ActiveCfg = Release|x64
-		{A6228BCF-2AF4-48C2-AB7F-B5642244A819}.Release|x64.Build.0 = Release|x64
-		{A6228BCF-2AF4-48C2-AB7F-B5642244A819}.Release|x86.ActiveCfg = Release|Win32
-		{A6228BCF-2AF4-48C2-AB7F-B5642244A819}.Release|x86.Build.0 = Release|Win32
 		{CB7FDCD4-C770-4C67-BEDD-E4B9F87CD008}.Debug|x64.ActiveCfg = Debug|x64
 		{CB7FDCD4-C770-4C67-BEDD-E4B9F87CD008}.Debug|x64.Build.0 = Debug|x64
 		{CB7FDCD4-C770-4C67-BEDD-E4B9F87CD008}.Debug|x86.ActiveCfg = Debug|Win32

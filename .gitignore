@@ -21,3 +21,4 @@
 /Server/common/cclient_msg/RteDefine.pb.h
 /Server/common/cclient_msg
 /Server/.vs
+/Server/log_collector/log

@@ -35,6 +35,7 @@ namespace chen {
 	{
 		PRASE_CLIENT_MSG(ptr, C2S_Login, msg_size);
 		CGUARD_REPLY(S2C_Login, m_session_id);
+		m_async_write_file.init(m_remote_ip.c_str(), msg.client_type());
 	}
 	void    cwan_session::handler_client_log_data_update(const void* ptr, uint32 msg_size)
 	{

@@ -15,7 +15,7 @@ REM   @ping -n 1 127.0.0.1>nul
 REM   start "auth_server" /D %Dir% %Dir%auth.exe ..\..\server.cfg  ..\..\log
 
 
-    @ping -n 1 127.0.0.1>nul
-    start "dongle_auth_server" /D %Dir% %Dir%dongle_auth.exe ..\..\server.cfg  ..\..\log
+@ping -n 1 127.0.0.1>nul
+start "log_server" /D %Dir% %Dir%log.exe ..\..\server.cfg  ..\..\log
 
 REM pause

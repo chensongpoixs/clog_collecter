@@ -33,7 +33,7 @@ namespace chen {
 	{
 		  
 		ECI_LogConfig = ECI_ServerMax,
-		ECI_LogCollector,
+		ECI_LogCollectorPath,
 		ECI_LogCollectorRows,
 		ECI_Max
 		  

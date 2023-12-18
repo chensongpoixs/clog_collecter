@@ -8,8 +8,8 @@ namespace chen {
 
 	enum EServerConfigIndex
 	{
-		ECI_WanIp,								// 外网ip
-		ECI_WanPort,							// 外网端口
+		ECI_LogIp,								// 外网ip
+		ECI_LogPort,							// 外网端口
 		   
 		//common
 		ECI_ResPath,
@@ -25,13 +25,13 @@ namespace chen {
 		ECI_LogDbName,
 		ECI_LogDbPort,
 		 
-		//wan
-		ECI_WanClientMaxNum,				// 最大外网客户端连接
-		ECI_WanMaxRecvSize,					// 外网最大接收消息大小
-		ECI_WanInputBufSize,				// 外网接收缓冲区大小
-		ECI_WanOutputBufSize,				// 外网发送缓冲区大小
-		ECI_WanOutputPoolSize,				// 外网发送消息内存池大小
-		ECI_WanMemPoolSize, 
+		//log
+		ECI_LogClientMaxNum,				// 最大外网客户端连接
+		ECI_LogMaxRecvSize,					// 外网最大接收消息大小
+		ECI_LogInputBufSize,				// 外网接收缓冲区大小
+		ECI_LogOutputBufSize,				// 外网发送缓冲区大小
+		ECI_LogOutputPoolSize,				// 外网发送消息内存池大小
+		ECI_LogMemPoolSize, 
 	 
 
 		ECI_ServerMax,//db config																																																																																		ECI_ServerMax,

@@ -46,10 +46,10 @@ namespace chen {
 		{
 			return true;
 		}
-
+		 
 		{
-			cversions& auth = m_versions[EDT_Log];
-			auth.push_back(1); 
+			cversions& log = m_versions[EDT_Log];
+			log.push_back(1);
 		} 
 		m_inited = true;
 		return true;

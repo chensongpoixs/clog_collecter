@@ -2,8 +2,18 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="clog_collector.cpp" />
+    <ClCompile Include="cclient.cpp" />
+    <ClCompile Include="cclient_session.cpp" />
+    <ClCompile Include="clog_collector_server.cpp" />
+    <ClCompile Include="crobot_msg_header.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="csession_handler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="clog_collector.h" />
+    <ClInclude Include="cclient.h" />
+    <ClInclude Include="cclient_session.h" />
+    <ClInclude Include="clog_collector_server.h" />
+    <ClInclude Include="crobot_msg_header.h" />
   </ItemGroup>
 </Project>

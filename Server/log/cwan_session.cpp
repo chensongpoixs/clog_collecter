@@ -28,21 +28,16 @@ purpose:	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ýµï¿½ï¿½Õ·ï¿½
 #include "clog.h"
 #include "cclient_msg/ErrorCode.pb.h"
 #include "cclient_msg/MsgID.pb.h"
- 
 #include "cguard_reply.h"
- 
 #include "ccfg.h"
 #include "cwan_server.h" 
 #include "cwan_server.h"
 #include <cinttypes>  
 #include "cmsg_base_id.h"
-#include "MsgID.pb.h" 
-//#include "cmysql.h"
+#include "MsgID.pb.h"  
 #include "cglobal_db.h"
 #include "csql_mgr.h"
-#include "cdb_query_result.h"
-//#include "crobot_msg_header.h"
-//#include "cdongle_auth_mgr.h" 
+#include "cdb_query_result.h" 
 #include "cutil.h"
 #include "clog.h"
 #include "crandom.h"

@@ -37,7 +37,7 @@ namespace chen {
 	{
 		m_remote_ip = remote_ip;
 		m_client_type = client_type;
-		m_log_path = g_cfg.get_string(ECI_LogCollector);
+		m_log_path = g_cfg.get_string(ECI_LogCollectorPath);
 		m_cur_log_file_rows = 0;
 		m_log_file_rows = g_cfg.get_uint32(ECI_LogCollectorRows);
 		m_stoped = false;
@@ -52,6 +52,7 @@ namespace chen {
 	void casync_write_file::destroy()
 	{
 		m_stoped = true;
+		m_condition.notify_all();
 		if (m_thread.joinable())
 		{
 			m_thread.join();
@@ -72,6 +73,9 @@ namespace chen {
 	{
 		clock_guard lock(m_log_lists_lock);
 		m_log_lists.push_back(msg);
+		{
+			m_condition.notify_one();
+		}
 	}
 
 	void casync_write_file::_work_pthread()
@@ -108,7 +112,7 @@ namespace chen {
 			m_cur_log_file_rows = 0;
 			// create log name [20231216]/[ip client_type timestamp]
 			char buff[ASCII_DATETIME_LEN] = {0};
-			chen::ctime_base_api::time64_datetime_format(::time(NULL), buff, 0, 0, 0);
+			chen::ctime_base_api::time64_datetime_format(::time(NULL), buff, 0, 0, -1);
 			std::string log_name_path = m_log_path +"/" + buff + "/";
 
 
@@ -120,7 +124,7 @@ namespace chen {
 				boost::filesystem::create_directories(log_path, ec);
 			}
 			char buffer[ASCII_DATETIME_LEN] = { 0 };
-			chen::ctime_base_api::time64_datetime_format(::time(NULL), buffer, 1, 0, 1);
+			chen::ctime_base_api::time64_datetime_format(::time(NULL), buffer, 0, 0, 0);
 			std::string log_name = m_remote_ip + "_" + std::to_string(m_client_type) + "_" + buffer + ".log";
 			
 			

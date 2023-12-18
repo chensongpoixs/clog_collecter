@@ -20,10 +20,9 @@ namespace chen {
 			return false;
 		}*/
 
-		//ip port
-		//gateway
-		set_string(ECI_WanIp, "wan_ip", "127.0.0.1");
-		set_uint32(ECI_WanPort, "wan_port", 8000);
+		//ip port 
+		set_string(ECI_LogIp, "log_ip", "127.0.0.1");
+		set_uint32(ECI_LogPort, "log_port", 8600);
 		 
 	 
 
@@ -49,16 +48,16 @@ namespace chen {
 
 		 
 		//Wan
-		set_uint32(ECI_WanClientMaxNum, "wan_client_max_num", 64);
+		set_uint32(ECI_LogClientMaxNum, "log_client_max_num", 64);
 		//单位 B
-		set_uint32(ECI_WanMaxRecvSize, "wan_max_recv_size", 1024);
+		set_uint32(ECI_LogMaxRecvSize, "log_max_recv_size", 1024);
 		//单位 B
-		set_uint32(ECI_WanInputBufSize, "wan_input_buf_size", 10 * 1024);
+		set_uint32(ECI_LogInputBufSize, "log_input_buf_size", 10 * 1024);
 		//单位 B
-		set_uint32(ECI_WanOutputBufSize, "wan_output_buf_size", 20 * 1024);
+		set_uint32(ECI_LogOutputBufSize, "log_output_buf_size", 20 * 1024);
 		//单位 MB
-		set_uint32(ECI_WanOutputPoolSize, "wan_output_pool_size", 10);
-		set_uint32(ECI_WanMemPoolSize, "wan_mem_pool_size", 20 * 1024);
+		set_uint32(ECI_LogOutputPoolSize, "log_output_pool_size", 10);
+		set_uint32(ECI_LogMemPoolSize, "log_mem_pool_size", 20 * 1024);
  
 		if (!_check())
 		{
