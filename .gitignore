@@ -24,3 +24,4 @@
 /Server/log_collector/log
 /Server/log_collector_client/log_collector_client.vcxproj.user
 /Server/bin/log_collector
+/Server/bin/bin.zip
