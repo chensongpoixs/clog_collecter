@@ -107,8 +107,10 @@ namespace chen {
 
 	void casync_write_file::_handler_check_log_file()
 	{
-		if (!m_log_file_ptr || m_cur_log_file_rows > m_log_file_rows)
+		uint32 day_time = ctime_base_api::get_today_stamp_time64(0);
+		if (!m_log_file_ptr || m_cur_log_file_rows > m_log_file_rows || day_time > m_day_time)
 		{
+			m_day_time = day_time;
 			m_cur_log_file_rows = 0;
 			// create log name [20231216]/[ip client_type timestamp]
 			char buff[ASCII_DATETIME_LEN] = {0};

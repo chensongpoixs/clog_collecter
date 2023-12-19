@@ -47,7 +47,8 @@ namespace chen {
 			, m_log_path("")
 			, m_log_file_ptr(NULL)
 			, m_cur_log_file_rows(0)
-			, m_log_file_rows(0){}
+			, m_log_file_rows(0)
+			, m_day_time(0){}
 		virtual ~casync_write_file();
 
 
@@ -80,6 +81,7 @@ namespace chen {
 		FILE*					m_log_file_ptr;
 		uint32					m_cur_log_file_rows;
 		uint32					m_log_file_rows;
+		uint32					m_day_time;
 	};
 }
 

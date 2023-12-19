@@ -61,6 +61,17 @@ namespace chen {
 		if (!query_result.next_row())
 		{
 			WARNING_EX_LOG("not find  [msg.client_type()  = %u][address = %s]", msg.client_type(), m_remote_ip.c_str());
+
+			{
+				//insert into tableName (colunm1,colunm2,...) value(value1,value2,...);
+				// insert sql 
+				g_sql_mgr.reset();
+				g_sql_mgr << "INSERT  INTO t_user_log_collector_info(`client_type`, `address` ) value(" << msg.client_type() << ", '" << m_remote_ip << "') ";
+				//g_sql_mgr.back(1);
+				//LLOG_SYSTEM << "sql = " << g_sql_mgr.get_buf();
+				g_global_log_db.excute(g_sql_mgr, ESqlError_CanIgnore);
+				g_sql_mgr.reset();
+			}
 			//err.assign("order not found");
 			//reply.set_result(EEC_DongleAuthNotAppid);
 			return;
