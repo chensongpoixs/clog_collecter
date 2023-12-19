@@ -16,6 +16,7 @@ namespace chen {
 	void cclient_session::send_login()
 	{
 		MC2S_Login msg;
+		msg.set_client_type(m_client_type);
 		send_msg(C2S_Login, msg);
 	}
 

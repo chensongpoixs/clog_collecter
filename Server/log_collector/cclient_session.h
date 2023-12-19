@@ -67,6 +67,8 @@ namespace chen {
 		bool   is_connected() const { return m_session_id != INVALID_SESSION_ID; }
 		void  on_disconnect();
 
+		void set_client_type(int32 client_type) { m_client_type = client_type; }
+
 		const std::string & get_task_id() const { return m_task_id; }
 		const std::string & get_collection_id() const { return m_collection_id; }
 	 
@@ -94,6 +96,7 @@ namespace chen {
 		std::string								m_collection_id;
 		uint32									m_gpu_index; 
 		time_t									m_send_rte_info;
+		uint32									m_client_type;
  
 	};
 

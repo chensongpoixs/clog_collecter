@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
 	//const char* wan_ip = "192.168.1.175";
 	//const uint16_t wan_port = 8000;
 
-	chen::LOG_COLLECTOR::init(argv[1], std::atoi(argv[2]), true);
+	chen::LOG_COLLECTOR::init(argv[1], std::atoi(argv[2]), std::atoi(argv[3]));
 
 
 	for (int i = 0; i < 100; ++i)

@@ -10,6 +10,8 @@ purpose:		�����
 #include "cdigit2str.h"
 #include "cclient.h"
 #include "clog_collector_server.h"
+#include "cclient_session.h"
+
 namespace chen {
 	static bool g_log_server_stoped = false;
 
@@ -29,7 +31,7 @@ namespace chen {
 	{
 		*this << '[' << func << ':' << line << "] ";
 	}
-	bool clog_collector::init(const char* ip, uint16_t port, bool show_screen)
+	bool clog_collector::init(const char* ip, uint16_t port, uint32_t client_type, bool show_screen)
 	{
 		//g_log_ptr = new casync_log();
 		//if (!g_log_ptr)
@@ -46,6 +48,7 @@ namespace chen {
 		{
 			return true;
 		}
+		s_agent_client_session.set_client_type(client_type);
 		if (!s_log_collector_server.init(ip, port, show_screen))
 		{
 			return false;

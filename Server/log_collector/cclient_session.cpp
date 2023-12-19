@@ -17,6 +17,7 @@ namespace chen {
 		/*, m_player(NULL)*/
 		, m_reconnect_timer(0)
 		, m_timestamp_second(0)
+		, m_client_type(0)
 		//, m_cloud_reandering_stop_cb(nullptr)
 		/*, m_gpu_index(20)
 		, m_send_rte_info(::time(NULL))*/

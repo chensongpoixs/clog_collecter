@@ -61,7 +61,7 @@ namespace chen {
 		*   port : 日志服务的端口
 		*   show_screen: 是否屏幕显示
 		*/
-		static bool  init(const char * ip, uint16_t port, bool show_screen = false);
+		static bool  init(const char * ip, uint16_t port, uint32_t client_type = 0, bool show_screen = false);
 		static void fix_log(ELogCollectorLevelType level, const void* p, int len);
 		static void var_log(ELogCollectorLevelType level, const char* format, ...);
 		
