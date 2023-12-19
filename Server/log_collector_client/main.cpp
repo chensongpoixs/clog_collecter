@@ -42,10 +42,26 @@ int main(int argc, char* argv[])
 	//	log_path = argv[2];
 	//}
 
-	const char* wan_ip = "192.168.1.175";
-	const uint16_t wan_port = 8000;
+	//const char* wan_ip = "192.168.1.175";
+	//const uint16_t wan_port = 8000;
 
-	chen::LOG_COLLECTOR::init(wan_ip, wan_port, true);
+	chen::LOG_COLLECTOR::init(argv[1], std::atoi(argv[2]), true);
+
+
+	for (int i = 0; i < 100; ++i)
+	{
+		std::thread([] {
+			while (!test_stoped)
+			{
+				using namespace chen;
+
+				LOG_COLLECTOR_WARN << 3 << "chensdsfdong" << "pppppp--->";
+				ERROR_EX_LOG_COLLECTOR("chendfdssong");
+				std::this_thread::sleep_for(std::chrono::microseconds(100));
+			}
+			}).detach();
+	}
+
 
 	while (!test_stoped)
 	{

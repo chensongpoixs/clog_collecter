@@ -115,7 +115,7 @@ namespace chen {
 			// create log name [20231216]/[ip client_type timestamp]
 			char buff[ASCII_DATETIME_LEN] = {0};
 			chen::ctime_base_api::time64_datetime_format(::time(NULL), buff, 0, 0, -1);
-			std::string log_name_path = m_log_path +"/" + buff + "/";
+			std::string log_name_path = m_log_path +"/" + buff + "/" + m_remote_ip + "/";
 
 
 			//检查目录是否存在, 不存在则创建
@@ -125,9 +125,10 @@ namespace chen {
 				boost::system::error_code ec;
 				boost::filesystem::create_directories(log_path, ec);
 			}
+			//[生成文件加上毫秒数]
 			char buffer[ASCII_DATETIME_LEN] = { 0 };
 			chen::ctime_base_api::time64_datetime_format(::time(NULL), buffer, 0, 0, 0);
-			std::string log_name = m_remote_ip + "_" + std::to_string(m_client_type) + "_" + buffer + ".log";
+			std::string log_name =   std::to_string(m_client_type) + "_" + buffer + std::to_string(ctime_base_api::get_time_ms())+ ".log";
 			
 			
 			log_name_path += log_name;
@@ -149,7 +150,7 @@ namespace chen {
 			collector.address = m_remote_ip;
 			collector.client_type = m_client_type;
 			collector.timestamp = ::time(NULL);
-			collector.log_file_name = std::string(buff) + "/" + log_name;
+			collector.log_file_name = std::string(buff) + "/" + m_remote_ip  + "/" + log_name;
 			g_global_log_data_mgr.push(collector);
 		}
 
