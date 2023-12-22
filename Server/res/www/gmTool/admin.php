@@ -54,9 +54,13 @@
 			{
 				echo '<li id="server_info"><a class="easyui-linkbutton" style="width:120px;padding=20px"><span lang>admin_php_4</span></a></li>';
 			}
-			 if(has_priv_prefix(402))
+			// if(has_priv_prefix(402))
+			//{
+			//	echo '<li id="client_log_search"><a class="easyui-linkbutton" style="width:120px;padding=20px"><span lang>admin_php_5</span></a></li>';
+			//}
+			 if(has_priv_prefix(403))
 			{
-				echo '<li id="client_log_search"><a class="easyui-linkbutton" style="width:120px;padding=20px"><span lang>admin_php_5</span></a></li>';
+				echo '<li id="log_search"><a class="easyui-linkbutton" style="width:120px;padding=20px"><span lang>admin_php_5</span></a></li>';
 			}
 			if(has_priv_prefix(407))
 			{

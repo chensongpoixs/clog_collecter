@@ -49,6 +49,27 @@ $(function () {
 		}
 	});
 	
+	$('#log_search a').click(function(){
+		if($('#tabs').tabs('exists',L('admin_js_2')))
+		{
+			$('#tabs').tabs('select',L('admin_js_2'));
+		}
+		else
+		{
+			//$('tabs').
+			var content = '<iframe scrolling="auto" frameborder="0"  src="log_search.php" style="width:100%;height:99%;"></iframe>';
+			$('#tabs').tabs('add',{
+			title:L('admin_js_1'),
+			content : content,
+			fit : true,
+			//closable : true,
+			//href : 'serverinfopage.php',
+			closed: true,
+			closable : true
+			});
+		}
+	});
+	
 	 
 	$('#js_data_info a').click(function(){
 		if($('#tabs').tabs('exists',L('admin_js_14')))

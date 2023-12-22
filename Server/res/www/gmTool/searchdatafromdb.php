@@ -73,7 +73,24 @@
 				break;
 				case 7:
 				{
-					$result = $log_db->query("SELECT `id`, `client_type`,  `address`, `timestamp`, `log_file_name`  FROM `t_log_collector_info`",MYSQLI_STORE_RESULT);
+					$time_start = $_POST['start_time'];
+					//DEBUG("===");
+					$time_end = $_POST['end_time'];;
+					$client_type = $_POST['client_type'];
+					DEBUG($client_type);
+					$address	   = $_POST['address'];
+					DEBUG($address);
+					
+					$sql = "SELECT `id`, `client_type`,  `address`, `timestamp`, `log_file_name`  FROM `t_log_collector_info` ";
+					$sql .= " WHERE `timestamp`>".$time_start." AND `timestamp`<=".$time_end;
+					$sql .= " AND `client_type` = ".$client_type;
+					
+					if ($address != '')
+					{
+						$sql .= " AND `address` = '".$address ."'";
+					}
+					DEBUG($sql);
+					$result = $log_db->query($sql,MYSQLI_STORE_RESULT);
 				}
 				break;
 				default:
@@ -92,7 +109,7 @@
 				if ($childtype == 7)
 				{
 					$row['client_type'] = get_log_client_type(intval($row['client_type']));
-					$row['log_file_url'] =   $log_collector_url_prefix. $row['log_file_name'] ;
+					$row['log_url'] =   $log_collector_url_prefix. $row['log_file_name'] ;
 					$row['datetime'] = date("Y-m-d H:i:s", intval($row['timestamp']) + 8 * (60*60));
 				}
  				$rows[] = $row;
@@ -215,14 +232,32 @@
 			$childtype = $_POST['childtype'];
 			$value	   = $_POST['value'];
 			
-			$sql = "SELECT `player_id`,`open_id`,`server_id`,`channel_id`, FROM_UNIXTIME(`create_time` + " . BASE_TIME .") AS `create_time`, `create_ip`";
-			$sql .= " ,`money`, `player_level`, `vip_level`, `player_name`, FROM_UNIXTIME(`last_logon_time` + ". BASE_TIME .") AS `last_logon_time`";
-			$sql .= " ,`last_logon_ip`,`machine_type`,`machine_id`";
-			$sql .= " FROM `t_player_info`";
-			$sql .= " WHERE `$childtype` LIKE '%$value%'";
+			//$sql = "SELECT `player_id`,`open_id`,`server_id`,`channel_id`, FROM_UNIXTIME(`create_time` + " . BASE_TIME .") AS `create_time`, `create_ip`";
+			//$sql .= " ,`money`, `player_level`, `vip_level`, `player_name`, FROM_UNIXTIME(`last_logon_time` + ". BASE_TIME .") AS `last_logon_time`";
+			//$sql .= " ,`last_logon_ip`,`machine_type`,`machine_id`";
+			//$sql .= " FROM `t_player_info`";
+			//$sql .= " WHERE `$childtype` LIKE '%$value%'";
+			//
+			//$result = $db->query("$sql limit $pageIndex,$rows", MYSQLI_STORE_RESULT);
+			$time_start = $_POST['start_time'];
+					//DEBUG("===");
+			$time_end = $_POST['end_time'];;
+			$client_type = $_POST['client_type'];
+			//DEBUG($client_type);
+			$address	   = $_POST['address'];
+			//DEBUG($address);
 			
-			$result = $db->query("$sql limit $pageIndex,$rows", MYSQLI_STORE_RESULT);
+			$sql = "SELECT `id`, `client_type`,  `address`, `timestamp`, `log_file_name`  FROM `t_log_collector_info` ";
+			$condition = " WHERE `timestamp`>".$time_start." AND `timestamp`<=".$time_end;
+			$condition .= " AND `client_type` = ".$client_type;
 			
+			if ($address != '')
+			{
+				$condition .= " AND `address` = '".$address ."'";
+			}
+			$new_sql = $sql .$condition;
+			//DEBUG($new_sql);
+			$result = $log_db->query("$new_sql limit $pageIndex,$rows",MYSQLI_STORE_RESULT);
 			$total = 0;
 			$json = '';
 			if($result)
@@ -234,11 +269,18 @@
 					{
 						$json .= ',';
 					}
+					$row['id'] = intval($row['id']); 
+					$row['client_type'] =  intval($row['client_type']);
+					$row['log_url'] =   $log_collector_url_prefix. $row['log_file_name'] ;
+					$row['datetime'] = date("Y-m-d H:i:s", intval($row['timestamp']) + 8 * (60*60));
+				 
+ 				///$rows[] = $row;
+					
 					$json .= json_encode($row);
 					++$count;
 				}
 				$result->close();
-				$total = get_row_count($db, 't_player_info', "WHERE `$childtype` LIKE '%$value%'");
+				$total = get_row_count($log_db, 't_log_collector_info', $condition);
 			}
 			echo '{"total" : '.$total.', "rows" : ['.$json.']}';
 		}

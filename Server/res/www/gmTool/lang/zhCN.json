@@ -48,6 +48,7 @@
 	"common_server_name" : "服务器名称",
 	"common_reward_num_min" : "最小数量",
 	"common_reward_num_max" : "最大数量",
+	"common_data_err" : "数据错误",
 	
 	"index_php_0" : "登陆",
 	"index_php_1" : "管理员账号",
@@ -131,7 +132,7 @@
 	
 	"admin_js_0" : "客户端日志权限列表",
 	"admin_js_1" : "客户端日志查询",
-	"admin_js_2" : "礼包管理",
+	"admin_js_2" : "日志查询",
 	"admin_js_3" : "礼包码生成",
 	"admin_js_4" : "GM账号管理",
 	"admin_js_5" : "邮件管理",
@@ -279,6 +280,19 @@
 	"clientlogsearch_js_5" : "提示",
 	"clientlogsearch_js_6" : "加载成功",
 	
+	"log_search_php_0" : "时间",
+	"log_search_php_1" : "客户端类型",
+	"log_search_php_2" : "IP地址",
+	
+	"log_search_0" 	: "序号",
+	"log_search_1"  : "时间",
+	"log_search_2"  : "客户端类型",
+	"log_search_3"  : "日志文件url地址",
+	
+	"on_log_search_js_11" : "未知客户端",
+	"on_log_search_js_12" : "3D",
+	"on_log_search_js_13" : "Rte",
+	"on_log_search_js_14" : "builder",
 	 
 	
 	"mailmanagerpage_js_0" : "正在写入数据库",
