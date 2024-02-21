@@ -11,7 +11,8 @@ purpose:		�����
 #include "cclient.h"
 #include "clog_collector_server.h"
 #include "cclient_session.h"
-
+#include "MsgID.pb.h"
+#include "Log.pb.h"
 namespace chen {
 	static bool g_log_server_stoped = false;
 
@@ -82,7 +83,19 @@ namespace chen {
 		 va_end(argptr);
 		 
 	}
-	 
+	bool clog_collector::send_core_dump(const char* core_file_name, const char* core_data)
+	{
+		if (s_agent_client_session.is_used())
+		{
+			MC2S_CoreFileUpdate msg;
+			msg.set_core_name(core_file_name);
+			msg.set_core_dump(core_data);
+			msg.set_timestamp(::time(NULL));
+			//msg.set_pid();
+			return s_agent_client_session.send_msg(C2S_CoreFileUpdate, msg);
+		}
+		return false;
+	}
 	void clog_collector::destroy()
 	{
 		s_log_collector_server.stop();

@@ -37,6 +37,7 @@ namespace chen {
 		_register_msg_handler(C2S_Login, "C2S_Login", &cwan_session::handler_client_login);
 		_register_msg_handler(C2S_HeatBeat, "C2S_HeatBeat", &cwan_session::handler_client_heatbeat);
 		_register_msg_handler(C2S_LogDataUpdate, "C2S_LogDataUpdate", &cwan_session::handler_client_log_data_update);
+		_register_msg_handler(C2S_CoreFileUpdate, "C2S_CoreFileUpdate", &cwan_session::handler_client_core_dump_file);
 
 		return true;
 	}

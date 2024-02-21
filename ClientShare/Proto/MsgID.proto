@@ -11,6 +11,6 @@ enum MsgID
 	C2S_Login 				= 502;
 	S2C_Login 				= 503;
 	C2S_LogDataUpdate 		= 504; //
-	
+	C2S_CoreFileUpdate		= 505; //
 	 
 }

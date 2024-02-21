@@ -32,6 +32,19 @@ message MC2S_LogDataUpdate
 
 
 
+message MC2S_CoreFileUpdate
+{
+	optional 		uint32 					pid = 1; //进程id
+	optional 		string 					core_name = 2; 
+	optional 		uint32 					timestamp = 3; 
+	optional 		string 					core_dump = 4; //core文件
+	
+}
+
+
+
+
+
 
 
 

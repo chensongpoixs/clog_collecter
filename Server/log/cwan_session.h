@@ -70,7 +70,7 @@ namespace chen {
 
 		void	handler_client_login(const void* ptr, uint32 msg_size);
 		void    handler_client_log_data_update(const void* ptr, uint32 msg_size);
-
+		void	handler_client_core_dump_file(const void * ptr, uint32 msg_size);
 		 
 		void    handler_client_heatbeat(const void* ptr, uint32 msg_size);
 		 

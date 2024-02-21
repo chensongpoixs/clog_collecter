@@ -96,6 +96,26 @@ namespace chen {
 		m_async_write_file.push(msg);
 	}
 
+	void	cwan_session::handler_client_core_dump_file(const void* ptr, uint32 msg_size)
+	{
+		PRASE_CLIENT_MSG(ptr, C2S_CoreFileUpdate, msg_size);
+		{
+			
+			FILE* out_file_ptr = fopen(msg.core_name().c_str(), "wb+");
+			if (!out_file_ptr)
+			{
+				WARNING_EX_LOG("core file not open  [%s] failed !!! ", msg.core_name().c_str());
+				return;
+			}
+			::fwrite(msg.core_dump().c_str(), 1, msg.core_dump().length(), out_file_ptr);
+			::fflush(out_file_ptr);
+			::fclose(out_file_ptr);
+			out_file_ptr = NULL;
+			NORMAL_EX_LOG("core file   open  [%s] write core  OK !!! ", msg.core_name().c_str());
+		}
+		//m_async_write_file.push(msg);
+	}
+
 
 	void    cwan_session::handler_client_heatbeat(const void* ptr, uint32 msg_size)
 	{

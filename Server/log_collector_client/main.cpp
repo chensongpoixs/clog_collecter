@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 //#include "clog_collector_server.h"
 #include "clog_collector.h"
@@ -63,14 +64,40 @@ int main(int argc, char* argv[])
 	}
 
 
+
+	FILE* read_file = fopen("test.dump", "r");
+
+	// 数据的大小
+		// 移动到文件末尾
+	::fseek(read_file, 0, SEEK_END);
+	// 获取当前位置，即文件大小
+	uint32_t size = ::ftell(read_file);
+	::fseek(read_file, 0, SEEK_SET);
+
+
+	std::string core_dump_data;
+	core_dump_data.resize(size + 1);
+	size_t read_size = ::fread((void*)core_dump_data.data(), 1, size, read_file);
+
+
+	if (read_file)
+	{
+		::fclose(read_file);
+		read_file = NULL;
+	}
+	
 	while (!test_stoped)
 	{
 		using namespace chen;
 
 		LOG_COLLECTOR_WARN << 3 << "chensong" << "pppppp--->";
 		ERROR_EX_LOG_COLLECTOR("chensong");
+		static uint32_t core_count = 9;
+		std::string core_file_name = "test_" + std::to_string(++core_count) + ".dump";
+		LOG_COLLECTOR::send_core_dump(core_file_name.c_str(), core_dump_data.c_str());
+
 		//LOG_COLLECTOR_SYSTEM()// << "chensong--->";
-		std::this_thread::sleep_for(std::chrono::microseconds(100));
+		std::this_thread::sleep_for(std::chrono::seconds(10));
 	}
 	/*bool init = s_log_collector_server.init(wan_ip, wan_port);
 

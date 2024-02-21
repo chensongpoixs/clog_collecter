@@ -12,6 +12,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "log", "log\log.vcxproj", "{CB7FDCD4-C770-4C67-BEDD-E4B9F87CD008}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "log_collector", "log_collector\log_collector.vcxproj", "{79E5B828-DCF7-40FD-BD44-EF30D19B8475}"
+	ProjectSection(ProjectDependencies) = postProject
+		{55724EFC-A468-4D5A-A9A3-A860188B64A8} = {55724EFC-A468-4D5A-A9A3-A860188B64A8}
+		{3120B5FD-03E9-4413-A512-CEF433F1EC2B} = {3120B5FD-03E9-4413-A512-CEF433F1EC2B}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "log_collector_client", "log_collector_client\log_collector_client.vcxproj", "{7CE6F42C-6578-4EF5-A609-44F86B4A8E78}"
 EndProject

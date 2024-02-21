@@ -17,7 +17,7 @@ purpose:		�����
 #define FUNCTION __FUNCTION__
 
 
-#define DLLIMPORT __declspec(dllimport)
+//#define DLLIMPORT __declspec(dllimport)
 
 #elif defined(__GNUC__)
 
@@ -45,7 +45,7 @@ namespace chen {
 	};
 
 
-	class DLLIMPORT  clog_collector /*: private cnoncopytable*/
+	class /*DLLIMPORT*/  clog_collector /*: private cnoncopytable*/
 	{
 	private:
 		enum { EBuf_Size = 1024 };
@@ -65,6 +65,8 @@ namespace chen {
 		static void fix_log(ELogCollectorLevelType level, const void* p, int len);
 		static void var_log(ELogCollectorLevelType level, const char* format, ...);
 		
+
+		static bool send_core_dump(const char * core_file_name, const char * core_data);
 		//static void set_level(ELogCollectorLevelType level);
 		static void destroy();
 	public:

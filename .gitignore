@@ -25,3 +25,4 @@
 /Server/log_collector_client/log_collector_client.vcxproj.user
 /Server/bin/log_collector
 /Server/bin/bin.zip
+/Server/log_collector_client/test.dump
