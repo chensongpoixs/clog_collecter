@@ -33,6 +33,8 @@ bool DLLIMPORT  cpp_init(const char *ip, uint32_t port, uint32_t client_type);
 
 bool DLLIMPORT cpp_send_core(const  char* core_file_name );
  
+
+void DLLIMPORT cpp_destroy();
  
 extern "C" {
 
@@ -42,6 +44,8 @@ extern "C" {
 	int DLLIMPORT  c_init(const char* ip, uint32_t port, uint32_t client_type);
 
 	int DLLIMPORT c_send_core(const  char* core_file_path );
+
+	void DLLIMPORT c_destroy();
 	 
 #ifdef __cplusplus
 

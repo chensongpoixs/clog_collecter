@@ -26,6 +26,7 @@ purpose:	ÍøÂçÊý¾ÝµÄÊÕ·¢
 *********************************************************************/
 #include "cwan_session.h"
 #include "cguard_reply.h"
+#include "cutil.h"
 #include "crobot_msg_header.h"
 #include "cglobal_db.h"
 #include "cdb_query_result.h"
@@ -98,20 +99,58 @@ namespace chen {
 
 	void	cwan_session::handler_client_core_dump_file(const void* ptr, uint32 msg_size)
 	{
-		PRASE_CLIENT_MSG(ptr, C2S_CoreFileUpdate, msg_size);
+		if (true)
 		{
-			
-			FILE* out_file_ptr = fopen(msg.core_name().c_str(), "wb+");
-			if (!out_file_ptr)
+			PRASE_CLIENT_MSG(ptr, C2S_CoreFileUpdate, msg_size);
 			{
-				WARNING_EX_LOG("core file not open  [%s] failed !!! ", msg.core_name().c_str());
-				return;
+				
+				//NORMAL_EX_LOG("[%s]", cutil::get_hex_str(msg.core_dump().c_str(), 1024).c_str());
+				FILE* out_file_ptr = fopen(msg.core_name().c_str(), "wb+");
+				if (!out_file_ptr)
+				{
+					WARNING_EX_LOG("core file not open  [%s] failed !!! ", msg.core_name().c_str());
+					return;
+				}
+
+
+
+
+				size_t write_size = ::fwrite(msg.core_dump().c_str(), 1, msg.core_dump().size(), out_file_ptr);
+				::fflush(out_file_ptr);
+				::fclose(out_file_ptr);
+				out_file_ptr = NULL;
+				NORMAL_EX_LOG("core file   open  [write_size = %u][%s] write core  OK !!! ", write_size, msg.core_name().c_str());
 			}
-			::fwrite(msg.core_dump().c_str(), 1, msg.core_dump().length(), out_file_ptr);
-			::fflush(out_file_ptr);
-			::fclose(out_file_ptr);
-			out_file_ptr = NULL;
-			NORMAL_EX_LOG("core file   open  [%s] write core  OK !!! ", msg.core_name().c_str());
+		}
+		else
+		{
+			//PRASE_CLIENT_MSG(ptr, C2S_CoreFileUpdate, msg_size);
+			{
+				NORMAL_EX_LOG("--[%s]", cutil::get_hex_str(static_cast<const void  *>((char *)(ptr) + (msg_size - 80)), 80).c_str());
+				//NORMAL_EX_LOG("[%s]", cutil::get_hex_str(msg.core_dump().c_str(), 1024).c_str());
+				FILE* out_file_ptr = fopen("chensong.zip", "wb+");
+				if (!out_file_ptr)
+				{
+					WARNING_EX_LOG("core file not open  failed !!! ",  );
+					return;
+				}
+				size_t write_size_l = 0;
+				while (write_size_l < msg_size)
+				{
+					size_t write_size = ::fwrite((const void *)((char *)ptr + write_size_l), 1, 4096, out_file_ptr);
+					if (write_size <= 0)
+					{
+						break;
+					}
+					
+					::fflush(out_file_ptr);
+					write_size_l += write_size;
+				}
+				
+				::fclose(out_file_ptr);
+				out_file_ptr = NULL;
+				NORMAL_EX_LOG("core file   open  [write_size = %u] write core  OK !!! ", write_size_l);
+			}
 		}
 		//m_async_write_file.push(msg);
 	}

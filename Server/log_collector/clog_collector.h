@@ -45,7 +45,7 @@ namespace chen {
 	};
 
 
-	class /*DLLIMPORT*/  clog_collector /*: private cnoncopytable*/
+	class /*__declspec(dllimport)*/  clog_collector /*: private cnoncopytable*/
 	{
 	private:
 		enum { EBuf_Size = 1024 };
@@ -66,9 +66,11 @@ namespace chen {
 		static void var_log(ELogCollectorLevelType level, const char* format, ...);
 		
 
-		static bool send_core_dump(const char * core_file_name, const char * core_data);
+		static bool send_core_dump(const char * core_file_name, const std::string& core_data);
 		//static void set_level(ELogCollectorLevelType level);
 		static void destroy();
+	private:
+		//void _pthread_work();
 	public:
 		clog_collector& operator<<(bool);
 		clog_collector& operator<<(char);
@@ -103,6 +105,7 @@ namespace chen {
 		char m_data[EBuf_Size] = {0};
 		int  m_len;
 		ELogCollectorLevelType m_level;
+
 
 	};
 

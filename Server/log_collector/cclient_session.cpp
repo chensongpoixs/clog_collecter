@@ -76,7 +76,8 @@ namespace chen {
 	{
 		//std::string message(msg.SerializeAsString());
 		//encrypt(message.c_str(), (void*)message.data(), message.length());
-		return s_lan_client.send_msg(m_session_id, msg_id, msg.SerializeAsString().c_str(), msg.ByteSize());
+		std::string message = msg.SerializeAsString();
+		return s_lan_client.send_msg(m_session_id, msg_id, message.c_str(), message.size());
 	}
 	
 	 

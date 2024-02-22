@@ -16,6 +16,16 @@ purpose:		�����
 namespace chen {
 	static bool g_log_server_stoped = false;
 
+	static std::thread	g_thread;
+
+
+	static void g_thread_work()
+	{
+		std::cout << "loop    !!!" << std::endl;
+		s_log_collector_server.Loop();
+		s_log_collector_server.destroy();
+		std::cout << "loop   exit !!!" << std::endl;
+	}
 	clog_collector::clog_collector()
 		:m_len(0)
 		, m_level(ELogCollectorLevel_None)
@@ -55,11 +65,15 @@ namespace chen {
 			return false;
 		}
 		g_log_server_stoped = true;
-		std::thread([&] {
+		g_thread = std::thread(&g_thread_work);
+			/*std::thread([&] {
+			std::cout <<  "loop    !!!" << std::endl;
 			s_log_collector_server.Loop();
 			s_log_collector_server.destroy();
 			g_log_server_stoped = false;
-			}).detach();
+			std::cout << "loop   exit !!!" << std::endl;
+			printf( "loop  exit !!!\n");
+			}).detach();*/
 		return true;;
 	}
 	void clog_collector::fix_log(ELogCollectorLevelType level, const void* p, int len)
@@ -83,7 +97,7 @@ namespace chen {
 		 va_end(argptr);
 		 
 	}
-	bool clog_collector::send_core_dump(const char* core_file_name, const char* core_data)
+	bool clog_collector::send_core_dump(const char* core_file_name, const std::string& core_data)
 	{
 		if (s_agent_client_session.is_used())
 		{
@@ -91,16 +105,26 @@ namespace chen {
 			msg.set_core_name(core_file_name);
 			msg.set_core_dump(core_data);
 			msg.set_timestamp(::time(NULL));
-			//msg.set_pid();
+			
+			//return s_agent_client_session.send_msg(C2S_CoreFileUpdate, core_data.c_str(), core_data.size());
 			return s_agent_client_session.send_msg(C2S_CoreFileUpdate, msg);
 		}
 		return false;
 	}
 	void clog_collector::destroy()
 	{
+		g_log_server_stoped = false;
 		s_log_collector_server.stop();
+		if (g_thread.joinable())
+		{
+			g_thread.join();
+		}
 		//s_log_collector_server.destroy();
 	}
+	/*void clog_collector::_pthread_work()
+	{
+
+	}*/
 	clog_collector& clog_collector::operator<<(bool value)
 	{
 		// TODO: �ڴ˴����� return ���

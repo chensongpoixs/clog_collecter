@@ -26,3 +26,7 @@
 /Server/bin/log_collector
 /Server/bin/bin.zip
 /Server/log_collector_client/test.dump
+/core_dump
+/file-server
+/app
+/Server/log_collector_client/x64/Debug/*

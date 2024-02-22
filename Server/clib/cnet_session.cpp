@@ -301,9 +301,10 @@ namespace chen {
 			return;
 		}
 		m_recv_size += static_cast<uint32>(bytes_transferred);
-		
+		//NORMAL_EX_LOG("read size = [%u]", bytes_transferred);
 		if (m_recv_ptr)
 		{
+			NORMAL_EX_LOG("");
 			if (m_recv_ptr->get_size() <  m_recv_size)
 			{
 				LOG_ERROR << "recv size too big, recv size=" << m_recv_size
@@ -540,6 +541,12 @@ namespace chen {
 				return false;
 			}
 			msg_size = header_ptr->m_msg_size ^ m_session_mgr.get_msg_size_key();
+		//	NORMAL_EX_LOG("[msg_id = %u][msg_size = %u][m_recv_buf_ptr = %u]", msg_id, msg_size, m_recv_buf_ptr->avail());
+			if ((msg_size + MSG_HEADER_SIZE) > m_recv_size)
+			{
+				//NORMAL_EX_LOG("m_recv_size = %u", m_recv_size);
+				return true;
+			}
 			if (msg_size > m_session_mgr.get_max_msg_size())
 			{
 				if (m_session_mgr.is_wan())
