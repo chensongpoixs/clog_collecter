@@ -99,6 +99,13 @@ namespace chen {
 	}
 	bool clog_collector::send_core_dump(const char* core_file_name, const std::string& core_data)
 	{
+		int32 count = 0;
+
+		while (!s_agent_client_session.is_used() && ++count < 20)
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+		}
+		printf("use = %u\n", s_agent_client_session.is_used());
 		if (s_agent_client_session.is_used())
 		{
 			MC2S_CoreFileUpdate msg;
@@ -107,7 +114,14 @@ namespace chen {
 			msg.set_timestamp(::time(NULL));
 			
 			//return s_agent_client_session.send_msg(C2S_CoreFileUpdate, core_data.c_str(), core_data.size());
-			return s_agent_client_session.send_msg(C2S_CoreFileUpdate, msg);
+			bool ret =  s_agent_client_session.send_msg(C2S_CoreFileUpdate, msg);
+			count = 0;
+			while (++count < 30)
+			{
+				std::this_thread::sleep_for(std::chrono::milliseconds(100));
+			}
+			return ret;
+
 		}
 		return false;
 	}
