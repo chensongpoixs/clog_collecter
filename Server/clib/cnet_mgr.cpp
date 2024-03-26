@@ -386,7 +386,7 @@ namespace chen {
 
 				
 		{
-			m_acceptor_ptr->set_option(boost::asio::ip::tcp::acceptor::reuse_address(true), ec);
+			m_acceptor_ptr->set_option(boost::asio::ip::tcp::acceptor::reuse_address(false), ec);
 
 			if (ec)
 			{
