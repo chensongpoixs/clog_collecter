@@ -66,7 +66,7 @@ namespace chen {
 		static void var_log(ELogCollectorLevelType level, const char* format, ...);
 		
 
-		static bool send_core_dump(const char * core_file_name, const std::string& core_data);
+		static bool send_core_dump(const char * core_file_path);
 		//static void set_level(ELogCollectorLevelType level);
 		static void destroy();
 	private:

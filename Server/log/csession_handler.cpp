@@ -105,20 +105,43 @@ namespace chen {
 			{
 				
 				//NORMAL_EX_LOG("[%s]", cutil::get_hex_str(msg.core_dump().c_str(), 1024).c_str());
-				FILE* out_file_ptr = fopen(msg.core_name().c_str(), "wb+");
+				/*FILE* out_file_ptr = fopen(msg.core_name().c_str(), "wb+");
 				if (!out_file_ptr)
 				{
 					WARNING_EX_LOG("core file not open  [%s] failed !!! ", msg.core_name().c_str());
 					return;
+				}*/
+				std::map<std::string, FILE* >::iterator iter =  m_all_file_map.find(msg.core_name());
+				if (iter == m_all_file_map.end())
+				{
+					FILE* out_file_ptr = fopen(msg.core_name().c_str(), "wb+");
+					if (!out_file_ptr)
+					{
+						WARNING_EX_LOG("core file not open  [%s] failed !!! ", msg.core_name().c_str());
+						return;
+					}
+					m_all_file_map[msg.core_name()] = out_file_ptr;
+					iter = m_all_file_map.find(msg.core_name());
+					if (iter == m_all_file_map.end())
+					{
+						WARNING_EX_LOG("core file map not find   [%s] failed !!! ", msg.core_name().c_str());
+						return;
+					}
+					//if (!m_all_file_map.insert(std::make_pair(msg.core_name(), out_file_ptr)).second)
 				}
 
 
+				size_t write_size = ::fwrite(msg.core_dump().c_str(), 1, msg.core_dump().size(), iter->second);
+				if (write_size != msg.core_dump().size())
+				{
+					::fflush(iter->second);
+					WARNING_EX_LOG("wirte = %u, core_size = %u", write_size, msg.core_dump().size());
+					size_t wir = ::fwrite((msg.core_dump().c_str() + write_size), 1, msg.core_dump().size() - write_size, iter->second);
 
-
-				size_t write_size = ::fwrite(msg.core_dump().c_str(), 1, msg.core_dump().size(), out_file_ptr);
-				::fflush(out_file_ptr);
-				::fclose(out_file_ptr);
-				out_file_ptr = NULL;
+				}
+				::fflush(iter->second);
+				//::fclose(out_file_ptr);
+				//out_file_ptr = NULL;
 				NORMAL_EX_LOG("core file   open  [write_size = %u][%s] write core  OK !!! ", write_size, msg.core_name().c_str());
 			}
 		}

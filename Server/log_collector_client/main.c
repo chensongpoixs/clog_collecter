@@ -9,7 +9,7 @@
 
 int main(int argc, char* argv[])
 {
-	c_init("192.168.2.17", 8000, 5);
+	c_init("127.0.0.1", 8000, 5);
 
 
 	//Sleep(1000);

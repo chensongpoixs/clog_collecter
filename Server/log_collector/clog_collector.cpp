@@ -17,7 +17,18 @@ namespace chen {
 	static bool g_log_server_stoped = false;
 
 	static std::thread	g_thread;
-
+	static std::string core_name(const std::string& path)
+	{
+		int32_t index = -1;
+		for (uint32_t i = 0; i < path.length(); ++i)
+		{
+			if (path.at(i) == '/' || path.at(i) == '\\')
+			{
+				index = i;
+			}
+		}
+		return path.substr(index + 1, path.length());
+	}
 
 	static void g_thread_work()
 	{
@@ -97,7 +108,7 @@ namespace chen {
 		 va_end(argptr);
 		 
 	}
-	bool clog_collector::send_core_dump(const char* core_file_name, const std::string& core_data)
+	bool clog_collector::send_core_dump(const char* core_file_path )
 	{
 		int32 count = 0;
 
@@ -105,16 +116,78 @@ namespace chen {
 		{
 			std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		}
+		count = 0;
 		printf("use = %u\n", s_agent_client_session.is_used());
 		if (s_agent_client_session.is_used())
 		{
+			static size_t max_msg_size = 1024 *1024;
+			uint32 send_count = 0;
+
+			std::string core_file_name = core_name(core_file_path);
 			MC2S_CoreFileUpdate msg;
+			bool ret = false;
+			size_t send_msg_size = 0;
 			msg.set_core_name(core_file_name);
-			msg.set_core_dump(core_data);
 			msg.set_timestamp(::time(NULL));
-			
-			//return s_agent_client_session.send_msg(C2S_CoreFileUpdate, core_data.c_str(), core_data.size());
-			bool ret =  s_agent_client_session.send_msg(C2S_CoreFileUpdate, msg);
+			FILE* read_file = fopen(core_file_path, "rb");
+			if (!read_file)
+			{
+				printf("[not open %s]\n", core_file_path);
+				return false;
+			}
+
+			//FILE* out_file_ptr = fopen("chensong.zip", "wb+");
+
+			//// 数据的大小
+			// 移动到文件末尾
+			::fseek(read_file, 0, SEEK_END);
+			// 获取当前位置，即文件大小
+			uint32_t size = ::ftell(read_file);
+			::fseek(read_file, 0, SEEK_SET);  
+
+			//std::string core_dump_data;
+	 
+			//core_dump_data.resize(size );
+			size_t read_size = 0;
+			size_t re_l = size;
+			char buffer[1024 * 100] = { 0 };
+			while (read_size < size)
+			{
+				
+				size_t size_r = ::fread((void*)(&buffer[0] /*+ read_size*/), 1, (1024 * 100), read_file);
+				//printf("[core_dump_data.max_size() = %u][read_size = %u]size_r = %u[size = %u]\n", core_dump_data.max_size(), read_size, size_r, size);
+				if (size_r <= 0)
+				{
+					//Sleep(1);
+					//fclose(out_file_ptr);
+					//out_file_ptr = NULL;
+					break;
+				}
+				msg.set_core_dump(buffer, size_r);
+				ret = s_agent_client_session.send_msg(C2S_CoreFileUpdate, msg);
+				//core_dump_data.append(std::string(&buffer[0], size_r));
+				//memcpy((void *)(core_dump_data.data() + read_size), &buffer[0], size_r);
+			/*	::fwrite(&buffer[0], 1, size_r, out_file_ptr);
+				::fflush(out_file_ptr);*/
+				re_l - size_r;
+				read_size += size_r;
+				std::this_thread::sleep_for(std::chrono::milliseconds(1));
+				//::fseek(read_file, size_r, SEEK_CUR);
+			}
+
+
+			if (read_file)
+			{
+				::fclose(read_file);
+				read_file = NULL;
+			}
+			/*if (out_file_ptr)
+			{
+				:: fflush(out_file_ptr);
+				::fclose(out_file_ptr);
+				out_file_ptr = NULL;
+			}*/
+			 
 			count = 0;
 			while (++count < 30)
 			{

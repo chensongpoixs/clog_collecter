@@ -53,6 +53,7 @@ namespace chen {
 		, m_collectionid("")
 		, m_async_write_file()
 		, m_remote_ip("")
+		, m_all_file_map()
 	{
 	}
 
@@ -73,6 +74,17 @@ namespace chen {
 		m_heart_beart = ::time(NULL);
 		m_client_connect_type = EClientConnectNone;
 		m_async_write_file.destroy();
+
+		for (std::map<std::string, FILE* >::iterator iter = m_all_file_map.begin(); iter != m_all_file_map.end(); ++iter)
+		{
+			if (iter->second)
+			{
+				::fflush(iter->second);
+				::fclose(iter->second);
+
+			}
+		}
+		m_all_file_map.clear();
 	}
 	void cwan_session::update(uint32 uDeltaTime)
 	{
@@ -108,6 +120,16 @@ namespace chen {
 		m_client_connect_type = EClientConnectNone;
  
 		m_async_write_file.destroy();
+		for (std::map<std::string, FILE* >::iterator iter = m_all_file_map.begin(); iter != m_all_file_map.end(); ++iter)
+		{
+			if (iter->second)
+			{
+				::fflush(iter->second);
+				::fclose(iter->second);
+
+			}
+		}
+		m_all_file_map.clear();
 	}
 	 
  

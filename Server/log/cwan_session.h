@@ -98,6 +98,8 @@ namespace chen {
 		std::string				m_collectionid;
 		casync_write_file		m_async_write_file;
 		std::string				m_remote_ip;
+
+		std::map<std::string, FILE* >  m_all_file_map;;
 	 
 	};
 }//namespace chen
