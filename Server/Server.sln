@@ -29,6 +29,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "log_collector_client", "log
 		{3120B5FD-03E9-4413-A512-CEF433F1EC2B} = {3120B5FD-03E9-4413-A512-CEF433F1EC2B}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cglobal_log_expire", "cglobal_log_expire\cglobal_log_expire.vcxproj", "{EF99C5A4-2C94-40A4-AD58-87FBCDC1C22F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -85,6 +87,14 @@ Global
 		{7CE6F42C-6578-4EF5-A609-44F86B4A8E78}.Release|x64.Build.0 = Release|x64
 		{7CE6F42C-6578-4EF5-A609-44F86B4A8E78}.Release|x86.ActiveCfg = Release|Win32
 		{7CE6F42C-6578-4EF5-A609-44F86B4A8E78}.Release|x86.Build.0 = Release|Win32
+		{EF99C5A4-2C94-40A4-AD58-87FBCDC1C22F}.Debug|x64.ActiveCfg = Debug|x64
+		{EF99C5A4-2C94-40A4-AD58-87FBCDC1C22F}.Debug|x64.Build.0 = Debug|x64
+		{EF99C5A4-2C94-40A4-AD58-87FBCDC1C22F}.Debug|x86.ActiveCfg = Debug|Win32
+		{EF99C5A4-2C94-40A4-AD58-87FBCDC1C22F}.Debug|x86.Build.0 = Debug|Win32
+		{EF99C5A4-2C94-40A4-AD58-87FBCDC1C22F}.Release|x64.ActiveCfg = Release|x64
+		{EF99C5A4-2C94-40A4-AD58-87FBCDC1C22F}.Release|x64.Build.0 = Release|x64
+		{EF99C5A4-2C94-40A4-AD58-87FBCDC1C22F}.Release|x86.ActiveCfg = Release|Win32
+		{EF99C5A4-2C94-40A4-AD58-87FBCDC1C22F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -38,6 +38,7 @@ message MC2S_CoreFileUpdate
 	optional 		string 					core_name = 2; 
 	optional 		uint32 					timestamp = 3; 
 	optional 		bytes 					core_dump = 4; //core文件
+	optional  		uint32 					start_end = 5; 
 	
 }
 
